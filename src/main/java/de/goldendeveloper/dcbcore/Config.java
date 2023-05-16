@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class Config {
 
-    private final Dotenv dotenv;
+    public final Dotenv dotenv;
 
     public Config() {
         dotenv = Dotenv.load();
@@ -41,28 +41,8 @@ public class Config {
         return dotenv.get("DISCORD_WEBHOOK");
     }
 
-    public int getMysqlPort() {
-        return Integer.parseInt(dotenv.get("MYSQL_PORT"));
-    }
-
-    public String getDiscordServer() {
-        return dotenv.get("DISCORD_SERVER");
-    }
-
     public String getDiscordToken() {
         return dotenv.get("DISCORD_TOKEN");
-    }
-
-    public String getMysqlHostname() {
-        return dotenv.get("MYSQL_HOSTNAME");
-    }
-
-    public String getMysqlPassword() {
-        return dotenv.get("MYSQL_PASSWORD");
-    }
-
-    public String getMysqlUsername() {
-        return dotenv.get("MYSQL_USERNAME");
     }
 
     public int getServerPort() {

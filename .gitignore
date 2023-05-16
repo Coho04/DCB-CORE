@@ -13,6 +13,9 @@ target/
 *.iml
 *.ipr
 
+/src/main/java/test/*
+.env
+
 ### Eclipse ###
 .apt_generated
 .classpath

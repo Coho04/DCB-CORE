@@ -91,16 +91,16 @@ public class ServerCommunicator {
         }
     }
 
-    public void removeServer(String guild) {
+    public void removeServer(String guild, DCBot dcBot) {
         Socket socket = null;
         try {
             socket = new Socket(this.HOSTNAME, this.PORT);
             OutputStream raus = socket.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(raus, StandardCharsets.UTF_8);
             JSONObject msg = new JSONObject();
-            msg.put("name", Main.getConfig().getProjektName());
+            msg.put("name", dcBot.getConfig().getProjektName());
             msg.put("type", action.REMOVE);
-            msg.put("server", Main.getDiscord().getBot().getGuilds().size());
+            msg.put("server", dcBot.getDiscord().getBot().getGuilds().size());
             msg.put("guild", guild);
             osw.write(msg.toString());
             osw.flush();
