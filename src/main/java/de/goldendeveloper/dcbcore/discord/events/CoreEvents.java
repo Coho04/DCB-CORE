@@ -4,7 +4,6 @@ import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookEmbed;
 import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
 import de.goldendeveloper.dcbcore.DCBot;
-import de.goldendeveloper.dcbcore.discord.Discord;
 import io.sentry.Sentry;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
@@ -25,7 +24,7 @@ public class CoreEvents extends ListenerAdapter {
     }
 
     @Override
-    public void onSlashCommandInteraction(SlashCommandInteractionEvent e) {
+    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent e) {
         dcBot.getDiscord().getCommands().stream().filter(command -> command.commandData().getName().equals(e.getName())).findFirst().ifPresent(command -> command.runSlashCommand(e, dcBot));
     }
 
