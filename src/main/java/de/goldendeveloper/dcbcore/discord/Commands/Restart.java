@@ -7,6 +7,9 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Restart implements CommandInterface {
     @Override
     public CommandData commandData() {
@@ -17,8 +20,9 @@ public class Restart implements CommandInterface {
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
         if (dcBot.getDiscord().hasPermissions(e)) {
             try {
+                String[] commands = {"screen -AmdS " + dcBot.getConfig().getProjektName() + " java -Xms1096M -Xmx1096M -jar " + dcBot.getConfig().getProjektName() + "-" + dcBot.getConfig().getProjektVersion() + ".jar restart"};
                 e.getInteraction().reply("Der Discord Bot [" + e.getJDA().getSelfUser().getName() + "] wird nun neugestartet!").queue();
-                Process p = Runtime.getRuntime().exec("screen -AmdS " + dcBot.getConfig().getProjektName() + " java -Xms1096M -Xmx1096M -jar " + dcBot.getConfig().getProjektName() + "-" + dcBot.getConfig().getProjektVersion() + ".jar restart");
+                Process p = Runtime.getRuntime().exec(commands);
                 p.waitFor();
                 e.getJDA().shutdown();
             } catch (Exception ex) {
