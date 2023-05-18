@@ -9,13 +9,14 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 public class Help implements CommandInterface {
+
     @Override
     public CommandData commandData() {
-        return Commands.slash("help", "Zeigt dir alle Commands");
+        return Commands.slash("help", "Zeigt dir alle Befehle");
     }
 
     @Override
@@ -30,7 +31,7 @@ public class Help implements CommandInterface {
         }
         e.getInteraction().replyEmbeds(embed.build())
                 .addActionRow(
-                        net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://wiki.Golden-Developer.de", "Online Übersicht"),
+                        Button.link("https://wiki.Golden-Developer.de", "Online Übersicht"),
                         Button.link("https://support.Golden-Developer.de", "Support Anfragen")
                 ).queue();
     }
