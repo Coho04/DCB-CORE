@@ -18,6 +18,7 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -80,16 +81,7 @@ public class Discord {
     }
 
     private void registerDefaultCommand() {
-        commands.add(new BotOwner());
-        commands.add(new BotStats());
-        commands.add(new Donate());
-        commands.add(new ErrorReport());
-        commands.add(new Help());
-        commands.add(new Invite());
-        commands.add(new Join());
-        commands.add(new Ping());
-        commands.add(new Restart());
-        commands.add(new Shutdown());
+        Collections.addAll(commands, new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
     }
 
     public LinkedList<CommandInterface> getCommands() {

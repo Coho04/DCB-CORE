@@ -30,7 +30,7 @@ public class Restart implements CommandInterface {
                 ex.printStackTrace();
             }
         } else {
-            e.getInteraction().reply("Dazu hast du keine Rechte du musst für diesen Befehl der Bot inhaber sein!").queue();
+            e.getInteraction().reply("Dazu hast du keine Rechte du musst für diesen Befehl der Bot Inhaber sein!").queue();
         }
     }
 }

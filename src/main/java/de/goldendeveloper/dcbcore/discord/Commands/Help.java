@@ -26,9 +26,7 @@ public class Help implements CommandInterface {
         embed.setTitle("**Help Commands**");
         embed.setColor(Color.MAGENTA);
         embed.setFooter("@Golden-Developer", e.getJDA().getSelfUser().getAvatarUrl());
-        for (Command c : cmd) {
-            embed.addField("/" + c.getName(), c.getDescription(), true);
-        }
+        cmd.forEach(c -> embed.addField("/" + c.getName(), c.getDescription(), true));
         e.getInteraction().replyEmbeds(embed.build())
                 .addActionRow(
                         Button.link("https://wiki.Golden-Developer.de", "Online Übersicht"),

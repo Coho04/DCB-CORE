@@ -21,7 +21,6 @@ public class Join implements CommandInterface {
         if (g != null) {
             e.getInteraction().reply("Mit dem Button unten kannst du unserem Server beitreten!")
                     .addActionRow(Button.link(g.getTextChannelById(Discord.WELCOME_CHANNEL).createInvite().complete().getUrl(), "Zum Server"))
-
                     .queue();
         } else {
             e.getInteraction().reply(dcBot.getDiscord().hasError("Guild is NULL")).queue();
