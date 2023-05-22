@@ -20,9 +20,9 @@ jobs:
         with:
           serverUrl: https://nexus.golden-developer.de
           username: github
-          password: ${{ secrets.NEXUS_PASSWORT }}
+          password: ${{ secrets.NEXUS_PASSWORD }}
           format: maven2
           repository: maven-releases
-          coordinates: groupId=de.golden-developer artifactId=DCB-Core version=${{GITHUB_REF}}
+          coordinates: groupId=de.golden-developer artifactId=DCB-Core version=${{github.ref}}
           assets: extension=jar
           filename: ./target/DCB-CORE-${{GITHUB_REF}}.jar
