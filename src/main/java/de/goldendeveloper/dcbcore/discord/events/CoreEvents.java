@@ -8,6 +8,7 @@ import io.sentry.Sentry;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ShutdownEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -26,6 +27,11 @@ public class CoreEvents extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent e) {
         dcBot.getDiscord().getCommands().stream().filter(command -> command.commandData().getName().equals(e.getName())).findFirst().ifPresent(command -> command.runSlashCommand(e, dcBot));
+    }
+
+    @Override
+    public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent e) {
+        dcBot.getDiscord().getCommands().stream().filter(command -> command.commandData().getName().equals(e.getName())).findFirst().ifPresent(command -> command.runCommandAutoComplete(e, dcBot));
     }
 
     @Override
