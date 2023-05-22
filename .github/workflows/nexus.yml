@@ -31,4 +31,4 @@ jobs:
           repository: maven-releases
           coordinates: groupId=de.golden-developer artifactId=DCB-Core version=${{ env.RELEASE_VERSION }}
           assets: extension=jar
-          filename: target/DCB-CORE-${{ env.RELEASE_VERSION }}.jar
+          filename: /target/DCB-CORE-${{ env.RELEASE_VERSION }}.jar
