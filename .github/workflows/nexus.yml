@@ -19,6 +19,8 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Build with Maven
         run: mvn package --file pom.xml
+      - name: Get Target File
+        run: ls target/*.jar
       - name: Nexus Repo Publish
         uses: sonatype-nexus-community/nexus-repo-github-action@master
         with:
