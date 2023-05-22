@@ -23,6 +23,6 @@ jobs:
           password: ${{ secrets.NEXUS_PASSWORD }}
           format: maven2
           repository: maven-releases
-          coordinates: groupId=de.golden-developer artifactId=DCB-Core version=${{github.ref}}
+          coordinates: groupId=de.golden-developer artifactId=DCB-Core version=${{ steps.extract_version.outputs.version }}
           assets: extension=jar
-          filename: ./target/DCB-CORE-${{github.ref}}.jar
+          filename: ./target/DCB-CORE-${{ steps.extract_version.outputs.version }}.jar
