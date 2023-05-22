@@ -28,7 +28,7 @@ jobs:
           username: github
           password: ${{ secrets.NEXUS_PASSWORD }}
           format: maven2
-          repository: maven-releases
+          repository: DCB-CORE
           coordinates: groupId=de.golden-developer artifactId=DCB-Core version=${{ env.RELEASE_VERSION }}
           assets: extension=jar
           filename: ./target/DCB-Core-${{ env.RELEASE_VERSION }}.jar
