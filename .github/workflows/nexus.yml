@@ -1,6 +1,8 @@
 name: Java with Nexus Repository
 
-on: [release]
+on:
+  release:
+    types: [published]
 
 jobs:
   build:
