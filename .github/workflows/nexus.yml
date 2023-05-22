@@ -15,6 +15,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 19
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Build with Maven
         run: mvn package --file pom.xml
       - name: Nexus Repo Publish
@@ -25,6 +27,6 @@ jobs:
           password: ${{ secrets.NEXUS_PASSWORD }}
           format: maven2
           repository: maven-releases
-          coordinates: groupId=de.golden-developer artifactId=DCB-Core version=${{ steps.extract_version.outputs.version }}
+          coordinates: groupId=de.golden-developer artifactId=DCB-Core version=${{ env.RELEASE_VERSION }}
           assets: extension=jar
-          filename: ./target/DCB-CORE-${{ steps.extract_version.outputs.version }}.jar
+          filename: ./target/DCB-CORE-${{ env.RELEASE_VERSION }}.jar
