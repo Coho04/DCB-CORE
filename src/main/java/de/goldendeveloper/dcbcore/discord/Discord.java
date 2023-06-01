@@ -25,8 +25,6 @@ import java.util.LinkedList;
 public class Discord {
 
     public static final long WELCOME_CHANNEL = 817500165866782772L;
-    private static final long COHO04_MEMBER = 513306244371447828L;
-    private static final long RAZZER_MEMBER = 428811057700536331L;
     public static final long MAIN_GUILD = 817500165866782770L;
 
     private JDA bot;
@@ -72,7 +70,9 @@ public class Discord {
             }
             bot.getPresence().setActivity(Activity.playing("/help | " + bot.getGuilds().size() + " Servern"));
             for (CommandInterface commandInterfaces : commands) {
-                bot.upsertCommand(commandInterfaces.commandData()).queue();
+                if (commandInterfaces.commandData() != null) {
+                    bot.upsertCommand(commandInterfaces.commandData()).queue();
+                }
             }
         } catch (InterruptedException e) {
             Sentry.captureException(e);
@@ -81,7 +81,7 @@ public class Discord {
     }
 
     private void registerDefaultCommand() {
-        Collections.addAll(commands, new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
+        Collections.addAll(commands,new BotStats(), new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
     }
 
     public LinkedList<CommandInterface> getCommands() {
@@ -112,10 +112,8 @@ public class Discord {
     }
 
     public Boolean hasPermissions(SlashCommandInteractionEvent e) {
-        return e.getUser() == e.getJDA().getUserById(RAZZER_MEMBER) || e.getUser() == e.getJDA().getUserById(COHO04_MEMBER);
-    }
-
-    public String hasError(String error) {
-        return "[ERROR]: Es ist ein Fehler aufgetreten bitte melden den Grund mit /error-report \n" + "Fehler: " + error;
+//        513306244371447828L ist die ID von Collin
+//        428811057700536331L ist die ID von Nick
+        return e.getUser() == e.getJDA().getUserById(428811057700536331L) || e.getUser() == e.getJDA().getUserById(513306244371447828L);
     }
 }

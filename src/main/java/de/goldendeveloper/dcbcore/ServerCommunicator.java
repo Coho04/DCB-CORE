@@ -30,79 +30,40 @@ public class ServerCommunicator {
     }
 
     public void startBot(JDA bot) {
-        Socket socket = null;
-        try {
-            socket = new Socket(this.HOSTNAME, this.PORT);
-            OutputStream raus = socket.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(raus, StandardCharsets.UTF_8);
-            JSONObject msg = new JSONObject();
-            msg.put("name", bot.getSelfUser().getName());
-            msg.put("invite", bot.getInviteUrl(Permission.ADMINISTRATOR));
-            msg.put("type", action.START);
-            msg.put("image", bot.getSelfUser().getAvatarUrl());
-            msg.put("commands", getCommandNameFromCommands(bot.retrieveCommands().complete()));
-            msg.put("server", getGuildIDsFromGuilds(bot));
-            osw.write(msg.toString());
-            osw.flush();
-            osw.close();
-        } catch (Exception e) {
-            Sentry.captureException(e);
-            e.printStackTrace();
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                    System.out.println("Socket geschlossen...");
-                } catch (Exception e) {
-                    Sentry.captureException(e);
-                    e.printStackTrace();
-                }
-            }
-        }
+        JSONObject data = new JSONObject();
+        data.put("name", bot.getSelfUser().getName());
+        data.put("type", action.START);
+        data.put("server", getGuildIDsFromGuilds(bot));
+        data.put("image", bot.getSelfUser().getAvatarUrl());
+        data.put("invite", bot.getInviteUrl(Permission.ADMINISTRATOR));
+        data.put("commands", getCommandNameFromCommands(bot.retrieveCommands().complete()));
+        sendDataToServer(data);
     }
 
     public void addServer(String guild, DCBot bot) {
-        Socket socket = null;
-        try {
-            socket = new Socket(this.HOSTNAME, this.PORT);
-            OutputStream raus = socket.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(raus, StandardCharsets.UTF_8);
-            JSONObject msg = new JSONObject();
-            msg.put("name", bot.getConfig().getProjektName());
-            msg.put("type", action.ADD);
-            msg.put("server", bot.getDiscord().getBot().getGuilds().size());
-            msg.put("guild", guild);
-            osw.write(msg.toString());
-            osw.flush();
-            osw.close();
-        } catch (Exception e) {
-            Sentry.captureException(e);
-            e.printStackTrace();
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                    System.out.println("Socket geschlossen...");
-                } catch (Exception e) {
-                    Sentry.captureException(e);
-                    e.printStackTrace();
-                }
-            }
-        }
+        sendDataToServer(getData(guild, bot, action.ADD));
     }
 
     public void removeServer(String guild, DCBot dcBot) {
+        sendDataToServer(getData(guild, dcBot, action.REMOVE));
+    }
+
+    public JSONObject getData(String guild, DCBot bot, action action) {
+        JSONObject data = new JSONObject();
+        data.put("name", bot.getConfig().getProjektName());
+        data.put("type", action);
+        data.put("server", bot.getDiscord().getBot().getGuilds().size());
+        data.put("guild", guild);
+        return data;
+    }
+
+    private void sendDataToServer(JSONObject jsonObject) {
         Socket socket = null;
         try {
             socket = new Socket(this.HOSTNAME, this.PORT);
             OutputStream raus = socket.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(raus, StandardCharsets.UTF_8);
-            JSONObject msg = new JSONObject();
-            msg.put("name", dcBot.getConfig().getProjektName());
-            msg.put("type", action.REMOVE);
-            msg.put("server", dcBot.getDiscord().getBot().getGuilds().size());
-            msg.put("guild", guild);
-            osw.write(msg.toString());
+            osw.write(jsonObject.toString());
             osw.flush();
             osw.close();
         } catch (Exception e) {

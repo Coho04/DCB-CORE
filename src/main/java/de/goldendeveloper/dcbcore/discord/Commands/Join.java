@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 public class Join implements CommandInterface {
+
     @Override
     public CommandData commandData() {
         return Commands.slash("join", "Zeigt dir wie du unserem Server beitreten kannst");
@@ -17,13 +18,13 @@ public class Join implements CommandInterface {
 
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
-        Guild g = e.getJDA().getGuildById(Discord.MAIN_GUILD);
-        if (g != null) {
+        Guild guild = e.getJDA().getGuildById(Discord.MAIN_GUILD);
+        if (guild != null) {
             e.getInteraction().reply("Mit dem Button unten kannst du unserem Server beitreten!")
-                    .addActionRow(Button.link(g.getTextChannelById(Discord.WELCOME_CHANNEL).createInvite().complete().getUrl(), "Zum Server"))
+                    .addActionRow(Button.link(guild.getTextChannelById(Discord.WELCOME_CHANNEL).createInvite().complete().getUrl(), "Zum Server"))
                     .queue();
         } else {
-            e.getInteraction().reply(dcBot.getDiscord().hasError("Guild is NULL")).queue();
+            e.getInteraction().reply("ERROR: Server is NULL").queue();
         }
     }
 }

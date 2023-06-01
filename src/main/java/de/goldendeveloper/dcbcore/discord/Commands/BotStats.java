@@ -10,8 +10,9 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-import java.awt.*;
+import java.awt.Color;
 
+@SuppressWarnings("ConstantConditions")
 public class BotStats implements CommandInterface {
     @Override
     public CommandData commandData() {

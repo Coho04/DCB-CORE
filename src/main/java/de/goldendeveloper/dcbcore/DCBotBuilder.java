@@ -6,11 +6,10 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.util.Collections;
 import java.util.LinkedList;
 
-@SuppressWarnings("unused")
 public class DCBotBuilder {
 
     private final LinkedList<ListenerAdapter> events = new LinkedList<>();
-    private LinkedList<CommandInterface> commandDataList = new LinkedList<>();
+    private final LinkedList<CommandInterface> commandDataList = new LinkedList<>();
     private final Boolean withServerCommunicator;
     private final String[] args;
 
@@ -28,7 +27,6 @@ public class DCBotBuilder {
         Collections.addAll(commandDataList, commands);
     }
 
-    @SuppressWarnings("unused")
     public void registerEvents(ListenerAdapter... listenerAdapters) {
         Collections.addAll(events, listenerAdapters);
     }

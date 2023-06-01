@@ -3,34 +3,27 @@ package de.goldendeveloper.dcbcore;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
 
-    public final Dotenv dotenv;
+    public Dotenv dotenv;
 
     public Config() {
         dotenv = Dotenv.load();
     }
 
+    public void setDotenv(Dotenv dotenv) {
+        this.dotenv = dotenv;
+    }
+
     public String getProjektVersion() {
-        Properties properties = new Properties();
-        try {
-            properties.load(this.getClass().getClassLoader().getResourceAsStream("project.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return properties.getProperty("version");
+        return loadProperties(this.getClass().getClassLoader().getResourceAsStream("project.properties")).getProperty("version");
     }
 
     public String getProjektName() {
-        Properties properties = new Properties();
-        try {
-            properties.load(this.getClass().getClassLoader().getResourceAsStream("project.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return properties.getProperty("name");
+        return loadProperties(this.getClass().getClassLoader().getResourceAsStream("project.properties")).getProperty("name");
     }
 
     public String getSentryDNS() {
@@ -51,5 +44,15 @@ public class Config {
 
     public String getServerHostname() {
         return dotenv.get("SERVER_HOSTNAME");
+    }
+
+    public Properties loadProperties(InputStream inputStream) {
+        Properties properties = new Properties();
+        try {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties;
     }
 }
