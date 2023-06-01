@@ -3,6 +3,7 @@ package de.goldendeveloper.dcbcore;
 import static org.junit.jupiter.api.Assertions.*;
 
 import de.goldendeveloper.dcbcore.interfaces.CommandInterface;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -64,5 +65,15 @@ class DCBotBuilderTest {
         events.add(mockedListenerAdapter);
         DCBot dcBot = dcBotBuilder.build();
         assertEquals(events, dcBot.getEvents());
+    }
+
+    @Test
+    void testRegisterGatewayIntents() {
+        dcBotBuilder = new DCBotBuilder(new String[0]);
+        dcBotBuilder.registerGatewayIntents(GatewayIntent.GUILD_MESSAGE_TYPING);
+        LinkedList<GatewayIntent> gatewayIntents = new LinkedList<>();
+        gatewayIntents.add(GatewayIntent.GUILD_MESSAGE_TYPING);
+        DCBot dcBot = dcBotBuilder.build();
+        assertEquals(gatewayIntents, dcBot.getGatewayIntentList());
     }
 }

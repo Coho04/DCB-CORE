@@ -7,13 +7,15 @@ import io.sentry.ITransaction;
 import io.sentry.Sentry;
 import io.sentry.SpanStatus;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import java.util.LinkedList;
 
 public class DCBot {
 
     private final LinkedList<ListenerAdapter> events = new LinkedList<>();
-    public final LinkedList<CommandInterface> commandDataList = new LinkedList<>();
+    private final LinkedList<CommandInterface> commandDataList = new LinkedList<>();
+    private final LinkedList<GatewayIntent> gatewayIntentList = new LinkedList<>();
     private Discord discord;
     private final Config config;
     private ServerCommunicator serverCommunicator;
@@ -22,7 +24,7 @@ public class DCBot {
     private Boolean deployment = true;
     private final String[] args;
 
-    public DCBot(String[] args, boolean withServerCommunicator, LinkedList<ListenerAdapter> events, LinkedList<CommandInterface> commandDataList) {
+    public DCBot(String[] args, boolean withServerCommunicator, LinkedList<ListenerAdapter> events, LinkedList<CommandInterface> commandDataList, LinkedList<GatewayIntent> gatewayIntentList) {
         if (args.length >= 1 && args[0].equalsIgnoreCase("restart")) {
             restart = true;
         }
@@ -33,6 +35,7 @@ public class DCBot {
         }
         this.events.addAll(events);
         this.commandDataList.addAll(commandDataList);
+        this.gatewayIntentList.addAll(gatewayIntentList);
         this.withServerCommunicator = withServerCommunicator;
         this.config = new Config();
         new SentryHandler(this.config.getSentryDNS(), this);
@@ -105,5 +108,9 @@ public class DCBot {
 
     public LinkedList<ListenerAdapter> getEvents() {
         return events;
+    }
+
+    public LinkedList<GatewayIntent> getGatewayIntentList() {
+        return gatewayIntentList;
     }
 }

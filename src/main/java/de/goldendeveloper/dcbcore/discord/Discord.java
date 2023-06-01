@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -21,6 +20,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Discord {
 
@@ -32,7 +32,7 @@ public class Discord {
     private final LinkedList<CommandInterface> commands;
 
     public Discord(String BOT_TOKEN, DCBot dcBot) {
-        this.commands = dcBot.commandDataList;
+        this.commands = dcBot.getCommandDataList();
         this.dcBot = dcBot;
         try {
             JDABuilder botBuilder = JDABuilder.createDefault(BOT_TOKEN)
@@ -50,18 +50,20 @@ public class Discord {
                             GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.GUILD_INVITES,
                             GatewayIntent.DIRECT_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGE_TYPING,
                             GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_WEBHOOKS,
-                            GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_TYPING
+                            GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_TYPING,
+                            GatewayIntent.MESSAGE_CONTENT
                     )
                     .addEventListeners(new CoreEvents(dcBot))
                     .setAutoReconnect(true)
                     .setContextEnabled(true);
             if (dcBot.getEvents().size() > 0) {
-                for (ListenerAdapter adapter : dcBot.getEvents()) {
-                    botBuilder.addEventListeners(adapter);
-                }
+                dcBot.getEvents().forEach(botBuilder::addEventListeners);
+            }
+            if (dcBot.getGatewayIntentList().size() > 0) {
+                botBuilder.enableIntents(dcBot.getGatewayIntentList());
             }
             bot = botBuilder.build().awaitReady();
-            registerDefaultCommand();
+            this.registerDefaultCommand();
             if (dcBot.getDeployment()) {
                 Online();
                 if (dcBot.getWithServerCommunicator()) {
@@ -69,11 +71,7 @@ public class Discord {
                 }
             }
             bot.getPresence().setActivity(Activity.playing("/help | " + bot.getGuilds().size() + " Servern"));
-            for (CommandInterface commandInterfaces : commands) {
-                if (commandInterfaces.commandData() != null) {
-                    bot.upsertCommand(commandInterfaces.commandData()).queue();
-                }
-            }
+            commands.stream().filter(Objects::nonNull).forEach(commandInterface -> bot.upsertCommand(commandInterface.commandData()).queue());
         } catch (InterruptedException e) {
             Sentry.captureException(e);
             e.printStackTrace();

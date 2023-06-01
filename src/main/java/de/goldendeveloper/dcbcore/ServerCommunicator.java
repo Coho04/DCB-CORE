@@ -73,7 +73,6 @@ public class ServerCommunicator {
             if (socket != null) {
                 try {
                     socket.close();
-                    System.out.println("Socket geschlossen...");
                 } catch (Exception e) {
                     Sentry.captureException(e);
                     e.printStackTrace();
