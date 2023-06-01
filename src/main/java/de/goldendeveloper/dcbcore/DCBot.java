@@ -19,9 +19,9 @@ public class DCBot {
     private Discord discord;
     private final Config config;
     private ServerCommunicator serverCommunicator;
-    private final Boolean withServerCommunicator;
-    private Boolean restart = false;
-    private Boolean deployment = true;
+    private final boolean withServerCommunicator;
+    private boolean restart = false;
+    private boolean deployment = true;
     private final String[] args;
 
     public DCBot(String[] args, boolean withServerCommunicator, LinkedList<ListenerAdapter> events, LinkedList<CommandInterface> commandDataList, LinkedList<GatewayIntent> gatewayIntentList) {
@@ -33,9 +33,12 @@ public class DCBot {
         if (device.equalsIgnoreCase("windows") || device.equalsIgnoreCase("Mac")) {
             deployment = false;
         }
-        this.events.addAll(events);
-        this.commandDataList.addAll(commandDataList);
-        this.gatewayIntentList.addAll(gatewayIntentList);
+        if (events != null)
+            this.events.addAll(events);
+        if (commandDataList != null)
+            this.commandDataList.addAll(commandDataList);
+        if (gatewayIntentList != null)
+            this.gatewayIntentList.addAll(gatewayIntentList);
         this.withServerCommunicator = withServerCommunicator;
         this.config = new Config();
         new SentryHandler(this.config.getSentryDNS(), this);
@@ -102,7 +105,7 @@ public class DCBot {
         return serverCommunicator;
     }
 
-    public Boolean getWithServerCommunicator() {
+    public boolean getWithServerCommunicator() {
         return withServerCommunicator;
     }
 
