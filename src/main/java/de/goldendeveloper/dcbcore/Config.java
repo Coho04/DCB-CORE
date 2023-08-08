@@ -14,6 +14,7 @@ public class Config {
         dotenv = Dotenv.load();
     }
 
+    @SuppressWarnings("unused")
     public void setDotenv(Dotenv dotenv) {
         this.dotenv = dotenv;
     }

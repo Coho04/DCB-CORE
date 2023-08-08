@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import java.util.Collections;
 import java.util.LinkedList;
 
+@SuppressWarnings("unused")
 public class DCBotBuilder {
 
     private final LinkedList<ListenerAdapter> events = new LinkedList<>();
@@ -24,7 +25,7 @@ public class DCBotBuilder {
         this.args = args;
         this.withServerCommunicator = false;
     }
-    
+
     public void registerGatewayIntents(GatewayIntent... gatewayIntents) {
         Collections.addAll(gatewayIntentList, gatewayIntents);
     }

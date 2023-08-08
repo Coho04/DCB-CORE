@@ -61,6 +61,7 @@ public class DCBot {
         discord = new Discord(config.getDiscordToken(), this);
     }
 
+    @SuppressWarnings("unused")
     public void setDeployment(Boolean deployment) {
         this.deployment = deployment;
     }
@@ -69,14 +70,17 @@ public class DCBot {
         this.discord = discord;
     }
 
+    @SuppressWarnings("unused")
     public void setRestart(Boolean restart) {
         this.restart = restart;
     }
 
+    @SuppressWarnings("unused")
     public void setServerCommunicator(ServerCommunicator serverCommunicator) {
         this.serverCommunicator = serverCommunicator;
     }
 
+    @SuppressWarnings("unused")
     public String[] getArgs() {
         return args;
     }
