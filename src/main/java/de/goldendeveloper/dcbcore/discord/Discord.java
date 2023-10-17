@@ -56,10 +56,10 @@ public class Discord {
                     .addEventListeners(new CoreEvents(dcBot))
                     .setAutoReconnect(true)
                     .setContextEnabled(true);
-            if (dcBot.getEvents().size() > 0) {
+            if (!dcBot.getEvents().isEmpty()) {
                 dcBot.getEvents().forEach(botBuilder::addEventListeners);
             }
-            if (dcBot.getGatewayIntentList().size() > 0) {
+            if (!dcBot.getGatewayIntentList().isEmpty()) {
                 botBuilder.enableIntents(dcBot.getGatewayIntentList());
             }
             bot = botBuilder.build().awaitReady();
