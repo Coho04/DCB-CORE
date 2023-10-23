@@ -81,7 +81,7 @@
     <repositories>
         <repository>
             <id>Golden-Developer</id>
-            <url>https://nexus.golden-developer.de/repository/maven-releases/</url>
+            <url>https://nexus.golden-developer.de/repository/maven-public/</url>
         </repository>
     </repositories>
 
