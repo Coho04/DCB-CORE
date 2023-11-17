@@ -12,15 +12,14 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Discord {
 
@@ -56,10 +55,10 @@ public class Discord {
                     .addEventListeners(new CoreEvents(dcBot))
                     .setAutoReconnect(true)
                     .setContextEnabled(true);
-            if (dcBot.getEvents().size() > 0) {
+            if (!dcBot.getEvents().isEmpty()) {
                 dcBot.getEvents().forEach(botBuilder::addEventListeners);
             }
-            if (dcBot.getGatewayIntentList().size() > 0) {
+            if (!dcBot.getGatewayIntentList().isEmpty()) {
                 botBuilder.enableIntents(dcBot.getGatewayIntentList());
             }
             bot = botBuilder.build().awaitReady();
@@ -79,7 +78,9 @@ public class Discord {
     }
 
     private void registerDefaultCommand() {
-        Collections.addAll(commands,new BotStats(), new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
+        LinkedList<CommandInterface> defaultCommands = new LinkedList<>();
+        Collections.addAll(defaultCommands,new BotStats(), new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
+        List<CommandInterface> d = defaultCommands.stream().filter(commandInterface -> !this.dcBot.getRemovedCommandDataList().contains(commandInterface)).collect(Collectors.toList());
     }
 
     public LinkedList<CommandInterface> getCommands() {

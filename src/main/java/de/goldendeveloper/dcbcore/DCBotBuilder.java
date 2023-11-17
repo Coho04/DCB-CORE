@@ -12,6 +12,7 @@ public class DCBotBuilder {
 
     private final LinkedList<ListenerAdapter> events = new LinkedList<>();
     private final LinkedList<CommandInterface> commandDataList = new LinkedList<>();
+    private final LinkedList<CommandInterface> removeCommandDataList = new LinkedList<>();
     private final LinkedList<GatewayIntent> gatewayIntentList = new LinkedList<>();
     private final Boolean withServerCommunicator;
     private final String[] args;
@@ -34,11 +35,15 @@ public class DCBotBuilder {
         Collections.addAll(commandDataList, commands);
     }
 
+    public void removeCommands(CommandInterface... commands) {
+        Collections.addAll(removeCommandDataList, commands);
+    }
+
     public void registerEvents(ListenerAdapter... listenerAdapters) {
         Collections.addAll(events, listenerAdapters);
     }
 
     public DCBot build() {
-        return new DCBot(this.args, this.withServerCommunicator, events, commandDataList, gatewayIntentList);
+        return new DCBot(this.args, this.withServerCommunicator, events, commandDataList, gatewayIntentList, removeCommandDataList);
     }
 }

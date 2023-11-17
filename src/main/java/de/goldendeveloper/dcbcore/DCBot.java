@@ -15,6 +15,7 @@ public class DCBot {
 
     private final LinkedList<ListenerAdapter> events = new LinkedList<>();
     private final LinkedList<CommandInterface> commandDataList = new LinkedList<>();
+    private final LinkedList<CommandInterface> removedCommandDataList = new LinkedList<>();
     private final LinkedList<GatewayIntent> gatewayIntentList = new LinkedList<>();
     private Discord discord;
     private final Config config;
@@ -24,7 +25,7 @@ public class DCBot {
     private boolean deployment = true;
     private final String[] args;
 
-    public DCBot(String[] args, boolean withServerCommunicator, LinkedList<ListenerAdapter> events, LinkedList<CommandInterface> commandDataList, LinkedList<GatewayIntent> gatewayIntentList) {
+    public DCBot(String[] args, boolean withServerCommunicator, LinkedList<ListenerAdapter> events, LinkedList<CommandInterface> commandDataList, LinkedList<GatewayIntent> gatewayIntentList, LinkedList<CommandInterface> removedCommandDataList) {
         if (args.length >= 1 && args[0].equalsIgnoreCase("restart")) {
             restart = true;
         }
@@ -39,12 +40,17 @@ public class DCBot {
             this.commandDataList.addAll(commandDataList);
         if (gatewayIntentList != null)
             this.gatewayIntentList.addAll(gatewayIntentList);
+        if (removedCommandDataList != null)
+            this.removedCommandDataList.addAll(removedCommandDataList);
         this.withServerCommunicator = withServerCommunicator;
         this.config = new Config();
         new SentryHandler(this.config.getSentryDNS(), this);
         ITransaction transaction = Sentry.startTransaction("Application()", "task");
         try {
-            application();
+            if (getDeployment() && withServerCommunicator) {
+                serverCommunicator = new ServerCommunicator(config.getServerHostname(), config.getServerPort());
+            }
+            discord = new Discord(config.getDiscordToken(), this);
         } catch (Exception e) {
             transaction.setThrowable(e);
             transaction.setStatus(SpanStatus.INTERNAL_ERROR);
@@ -52,13 +58,6 @@ public class DCBot {
         } finally {
             transaction.finish();
         }
-    }
-
-    public void application() {
-        if (getDeployment() && withServerCommunicator) {
-            serverCommunicator = new ServerCommunicator(config.getServerHostname(), config.getServerPort());
-        }
-        discord = new Discord(config.getDiscordToken(), this);
     }
 
     @SuppressWarnings("unused")
@@ -87,6 +86,10 @@ public class DCBot {
 
     public LinkedList<CommandInterface> getCommandDataList() {
         return commandDataList;
+    }
+
+    public LinkedList<CommandInterface> getRemovedCommandDataList() {
+        return removedCommandDataList;
     }
 
     public Discord getDiscord() {
