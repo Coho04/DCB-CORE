@@ -55,6 +55,7 @@ public class DCBot {
             transaction.setThrowable(e);
             transaction.setStatus(SpanStatus.INTERNAL_ERROR);
             Sentry.captureException(e);
+            System.out.println(e.getMessage());
         } finally {
             transaction.finish();
         }
