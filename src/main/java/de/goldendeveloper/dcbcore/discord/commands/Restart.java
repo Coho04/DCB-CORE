@@ -1,4 +1,4 @@
-package de.goldendeveloper.dcbcore.discord.Commands;
+package de.goldendeveloper.dcbcore.discord.commands;
 
 import de.goldendeveloper.dcbcore.DCBot;
 import de.goldendeveloper.dcbcore.interfaces.CommandInterface;
@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 public class Restart implements CommandInterface {
+
     @Override
     public CommandData commandData() {
         return Commands.slash("restart", "Starte den Bot neu!");
@@ -22,9 +23,9 @@ public class Restart implements CommandInterface {
                 Process p = Runtime.getRuntime().exec(commands);
                 p.waitFor();
                 e.getJDA().shutdown();
-            } catch (Exception ex) {
-                Sentry.captureException(ex);
-                ex.printStackTrace();
+            } catch (Exception exception) {
+                Sentry.captureException(exception);
+                System.out.println(exception.getMessage());
             }
         } else {
             e.getInteraction().reply("Dazu hast du keine Rechte du musst für diesen Befehl der Bot Inhaber sein!").queue();

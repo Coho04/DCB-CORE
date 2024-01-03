@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class DCBot {
 
     private final LinkedList<ListenerAdapter> events = new LinkedList<>();
@@ -71,7 +72,6 @@ public class DCBot {
         }
     }
 
-    @SuppressWarnings("unused")
     public void setDeployment(Boolean deployment) {
         this.deployment = deployment;
     }
@@ -80,17 +80,14 @@ public class DCBot {
         this.discord = discord;
     }
 
-    @SuppressWarnings("unused")
     public void setRestart(Boolean restart) {
         this.restart = restart;
     }
 
-    @SuppressWarnings("unused")
     public void setClientToServer(ClientToServer clientToServer) {
         this.clientToServer = clientToServer;
     }
 
-    @SuppressWarnings("unused")
     public String[] getArgs() {
         return args;
     }

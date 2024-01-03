@@ -1,4 +1,4 @@
-package de.goldendeveloper.dcbcore.discord.Commands;
+package de.goldendeveloper.dcbcore.discord.commands;
 
 import de.goldendeveloper.dcbcore.DCBot;
 import de.goldendeveloper.dcbcore.discord.Discord;
@@ -14,6 +14,7 @@ import java.awt.Color;
 
 @SuppressWarnings("ConstantConditions")
 public class BotStats implements CommandInterface {
+
     @Override
     public CommandData commandData() {
         return Commands.slash("bot-stats", "Zeigt dir die Bot Statistiken");

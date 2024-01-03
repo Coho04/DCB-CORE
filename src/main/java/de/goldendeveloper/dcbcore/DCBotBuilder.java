@@ -12,7 +12,7 @@ public class DCBotBuilder {
 
     private final LinkedList<ListenerAdapter> events = new LinkedList<>();
     private final LinkedList<CommandInterface> commandDataList = new LinkedList<>();
-    private final LinkedList<CommandInterface> removeCommandDataList = new LinkedList<>();
+    private final LinkedList<CommandInterface> removedCommandDataList = new LinkedList<>();
     private final LinkedList<GatewayIntent> gatewayIntentList = new LinkedList<>();
     private final Boolean withServerCommunicator;
     private final String[] args;
@@ -28,22 +28,30 @@ public class DCBotBuilder {
     }
 
     public void registerGatewayIntents(GatewayIntent... gatewayIntents) {
-        Collections.addAll(gatewayIntentList, gatewayIntents);
+        if (gatewayIntents != null) {
+            Collections.addAll(gatewayIntentList, gatewayIntents);
+        }
     }
 
     public void registerCommands(CommandInterface... commands) {
-        Collections.addAll(commandDataList, commands);
+        if (commands != null) {
+            Collections.addAll(commandDataList, commands);
+        }
     }
 
     public void removeCommands(CommandInterface... commands) {
-        Collections.addAll(removeCommandDataList, commands);
+        if (commands != null) {
+            Collections.addAll(removedCommandDataList, commands);
+        }
     }
 
     public void registerEvents(ListenerAdapter... listenerAdapters) {
-        Collections.addAll(events, listenerAdapters);
+        if (listenerAdapters != null){
+            Collections.addAll(events, listenerAdapters);
+        }
     }
 
     public DCBot build() {
-        return new DCBot(this.args, this.withServerCommunicator, events, commandDataList, gatewayIntentList, removeCommandDataList);
+        return new DCBot(this.args, this.withServerCommunicator, events, commandDataList, gatewayIntentList, removedCommandDataList);
     }
 }

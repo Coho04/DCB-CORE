@@ -4,114 +4,90 @@ import de.goldendeveloper.dcbcore.discord.Discord;
 import de.goldendeveloper.dcbcore.interfaces.CommandInterface;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import java.util.LinkedList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DCBotTest {
-//
-//    @Mock
-//    private Discord mockedDiscord;
-//    @Mock
-//    private Config mockedConfig;
-//    @Mock
-//    private ServerCommunicator mockedServerCommunicator;
-//    @Mock
-//    private ListenerAdapter mockedListenerAdapter;
-//
-//    private LinkedList<ListenerAdapter> events;
-//    private LinkedList<CommandInterface> commandDataList;
-//    private LinkedList<GatewayIntent> gatewayIntentsList;
-//
-//    @BeforeEach
-//    public void setup() {
-//        MockitoAnnotations.openMocks(this);
-//        events = new LinkedList<>();
-//        commandDataList = new LinkedList<>();
-//        gatewayIntentsList = new LinkedList<>();
-//    }
-//
-//    @Test
-//    public void testApplication() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        Mockito.when(mockedConfig.getDiscordToken()).thenReturn("mockedToken");
-//        dcBot.setDiscord(mockedDiscord);
-//        dcBot.application();
-////        verify(mockedConfig).getDiscordToken();
-//    }
-//
-//    @Test
-//    public void testGetArgs() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        String[] actualArgs = dcBot.getArgs();
-//        assertEquals(new String[]{"restart"}, actualArgs);
-//    }
-//
-//    @Test
-//    public void testGetCommandDataList() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        LinkedList<CommandInterface> actualCommandDataList = dcBot.getCommandDataList();
-//        Assertions.assertNotNull(actualCommandDataList);
-//    }
-//
-//    @Test
-//    public void testGetDiscord() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        dcBot.setDiscord(mockedDiscord);
-//        Discord actualDiscord = dcBot.getDiscord();
-//        assertEquals(mockedDiscord, actualDiscord);
-//    }
-//
-//    @Test
-//    public void testGetConfig() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        Config actualConfig = dcBot.getConfig();
-//        Assertions.assertNotNull(actualConfig);
-//    }
-//
-//    @Test
-//    public void testGetRestart() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        dcBot.setRestart(true);
-//        Boolean actualRestart = dcBot.getRestart();
-//        assertEquals(true, actualRestart);
-//    }
-//
-//    @Test
-//    public void testGetDeployment() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        dcBot.setDeployment(true);
-//        Boolean actualDeployment = dcBot.getDeployment();
-//        assertEquals(true, actualDeployment);
-//    }
-//
-//    @Test
-//    public void testGetServerCommunicator() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        dcBot.setServerCommunicator(mockedServerCommunicator);
-//        ServerCommunicator actualServerCommunicator = dcBot.getServerCommunicator();
-//        assertEquals(mockedServerCommunicator, actualServerCommunicator);
-//    }
-//
-//    @Test
-//    public void testGetWithServerCommunicator() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        boolean actualWithServerCommunicator = dcBot.getWithServerCommunicator();
-//        assertTrue(actualWithServerCommunicator);
-//    }
-//
-//    @Test
-//    public void testGetEvents() {
-//        DCBot dcBot = new DCBot(new String[]{"restart"}, true, events, commandDataList, gatewayIntentsList);
-//        dcBot.getEvents().add(mockedListenerAdapter);
-//        Assertions.assertNotNull(dcBot.getEvents());
-//    }
+
+    private DCBot bot;
+    private final String[] args = {"restart"};
+    private LinkedList<ListenerAdapter> events;
+    private LinkedList<CommandInterface> commandDataList;
+    private LinkedList<GatewayIntent> gatewayIntentList;
+    private LinkedList<CommandInterface> removedCommandDataList;
+
+    @BeforeEach
+    public void setup() {
+        events = new LinkedList<>();
+        commandDataList = new LinkedList<>();
+        gatewayIntentList = new LinkedList<>();
+        removedCommandDataList = new LinkedList<>();
+        bot = new DCBot(args, true, events, commandDataList, gatewayIntentList, removedCommandDataList);
+    }
+
+    @Test
+    public void shouldReturnArgs() {
+        assertArrayEquals(args, bot.getArgs());
+    }
+
+    @Test
+    public void shouldReturnCommandDataList() {
+        assertEquals(commandDataList, bot.getCommandDataList());
+    }
+
+    @Test
+    public void shouldReturnRemovedCommandDataList() {
+        assertEquals(removedCommandDataList, bot.getRemovedCommandDataList());
+    }
+
+    @Test
+    public void shouldReturnEvents() {
+        assertEquals(events, bot.getEvents());
+    }
+
+    @Test
+    public void shouldReturnGatewayIntentList() {
+        assertEquals(gatewayIntentList, bot.getGatewayIntentList());
+    }
+
+    @Test
+    public void shouldReturnRestartStatus() {
+        assertTrue(bot.getRestart());
+    }
+
+    @Test
+    public void shouldReturnDeploymentStatus() {
+        assertFalse(bot.getDeployment());
+    }
+
+    @Test
+    public void shouldSetAndReturnDiscord() {
+        Discord discord = Mockito.mock(Discord.class);
+        bot.setDiscord(discord);
+        assertEquals(discord, bot.getDiscord());
+    }
+
+    @Test
+    public void shouldSetAndReturnServerCommunicator() {
+        ClientToServer serverCommunicator = Mockito.mock(ClientToServer.class);
+        bot.setClientToServer(serverCommunicator);
+        assertEquals(serverCommunicator, bot.getClientToServer());
+    }
+
+    @Test
+    public void shouldSetAndReturnDeploymentStatus() {
+        bot.setDeployment(true);
+        assertTrue(bot.getDeployment());
+    }
+
+    @Test
+    public void shouldSetAndReturnRestartStatus() {
+        bot.setRestart(false);
+        assertFalse(bot.getRestart());
+    }
 }

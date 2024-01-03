@@ -1,4 +1,4 @@
-package de.goldendeveloper.dcbcore.discord.Commands;
+package de.goldendeveloper.dcbcore.discord.commands;
 
 import de.goldendeveloper.dcbcore.DCBot;
 import de.goldendeveloper.dcbcore.interfaces.CommandInterface;
@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 public class Invite implements CommandInterface {
+
     @Override
     public CommandData commandData() {
         return Commands.slash("invite", "Lade den Bot auf deinen Server ein!");
