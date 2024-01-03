@@ -6,7 +6,7 @@
 
     <groupId>de.goldendeveloper</groupId>
     <artifactId>DCB-Core</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     <url>https://github.com/Golden-Developer/GD-DC-CORE</url>
 
     <properties>
@@ -137,6 +137,11 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>5.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.java-websocket</groupId>
+            <artifactId>Java-WebSocket</artifactId>
+            <version>1.5.5</version>
         </dependency>
     </dependencies>
 </project>

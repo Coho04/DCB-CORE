@@ -52,7 +52,7 @@ public class Config {
         try {
             properties.load(inputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return properties;
     }
