@@ -4,7 +4,7 @@ import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookEmbed;
 import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
 import de.goldendeveloper.dcbcore.DCBot;
-import de.goldendeveloper.dcbcore.discord.Commands.*;
+import de.goldendeveloper.dcbcore.discord.commands.*;
 import de.goldendeveloper.dcbcore.discord.events.CoreEvents;
 import de.goldendeveloper.dcbcore.interfaces.CommandInterface;
 import io.sentry.Sentry;
@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -30,11 +29,11 @@ public class Discord {
     private final DCBot dcBot;
     private final LinkedList<CommandInterface> commands;
 
-    public Discord(String BOT_TOKEN, DCBot dcBot) {
+    public Discord(String botToken, DCBot dcBot) {
         this.commands = dcBot.getCommandDataList();
         this.dcBot = dcBot;
         try {
-            JDABuilder botBuilder = JDABuilder.createDefault(BOT_TOKEN)
+            JDABuilder botBuilder = JDABuilder.createDefault(botToken)
                     .setChunkingFilter(ChunkingFilter.ALL)
                     .setMemberCachePolicy(MemberCachePolicy.ALL)
                     .enableCache(
@@ -64,7 +63,7 @@ public class Discord {
             bot = botBuilder.build().awaitReady();
             this.registerDefaultCommand();
             if (dcBot.getDeployment()) {
-                Online();
+                sendDiscordOnlineMessage();
                 if (dcBot.getWithServerCommunicator()) {
                     dcBot.getServerCommunicator().startBot(bot);
                 }
@@ -77,9 +76,9 @@ public class Discord {
         }
     }
 
-    private void registerDefaultCommand() {
+    void registerDefaultCommand() {
         LinkedList<CommandInterface> defaultCommands = new LinkedList<>();
-        Collections.addAll(defaultCommands,new BotStats(), new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
+        Collections.addAll(defaultCommands, new BotStats(), new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
         List<CommandInterface> d = defaultCommands.stream().filter(commandInterface -> !this.dcBot.getRemovedCommandDataList().contains(commandInterface)).collect(Collectors.toList());
     }
 
@@ -91,7 +90,7 @@ public class Discord {
         return bot;
     }
 
-    private void Online() {
+    private void sendDiscordOnlineMessage() {
         WebhookEmbedBuilder embed = new WebhookEmbedBuilder();
         if (dcBot.getRestart()) {
             embed.setColor(0x33FFFF);
@@ -111,8 +110,6 @@ public class Discord {
     }
 
     public Boolean hasPermissions(SlashCommandInteractionEvent e) {
-//        513306244371447828L ist die ID von Collin
-//        428811057700536331L ist die ID von Nick
         return e.getUser() == e.getJDA().getUserById(428811057700536331L) || e.getUser() == e.getJDA().getUserById(513306244371447828L);
     }
 }

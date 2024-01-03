@@ -21,11 +21,11 @@ public class ServerCommunicator {
         START
     }
 
-    private final String HOSTNAME;
+    private final String hostname;
     private final int PORT;
 
-    public ServerCommunicator(String HOSTNAME, int PORT) {
-        this.HOSTNAME = HOSTNAME;
+    public ServerCommunicator(String hostname, int PORT) {
+        this.hostname = hostname;
         this.PORT = PORT;
     }
 
@@ -60,7 +60,7 @@ public class ServerCommunicator {
     private void sendDataToServer(JSONObject jsonObject) {
         Socket socket = null;
         try {
-            socket = new Socket(this.HOSTNAME, this.PORT);
+            socket = new Socket(this.hostname, this.PORT);
             OutputStream raus = socket.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(raus, StandardCharsets.UTF_8);
             osw.write(jsonObject.toString());

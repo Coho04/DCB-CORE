@@ -1,4 +1,4 @@
-package de.goldendeveloper.dcbcore.discord.Commands;
+package de.goldendeveloper.dcbcore.discord.commands;
 
 import de.goldendeveloper.dcbcore.DCBot;
 import de.goldendeveloper.dcbcore.discord.Discord;

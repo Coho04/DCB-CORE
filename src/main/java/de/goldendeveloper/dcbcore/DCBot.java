@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import java.util.LinkedList;
 
+@SuppressWarnings("unused")
 public class DCBot {
 
     private final LinkedList<ListenerAdapter> events = new LinkedList<>();
@@ -61,7 +62,6 @@ public class DCBot {
         }
     }
 
-    @SuppressWarnings("unused")
     public void setDeployment(Boolean deployment) {
         this.deployment = deployment;
     }
@@ -70,17 +70,14 @@ public class DCBot {
         this.discord = discord;
     }
 
-    @SuppressWarnings("unused")
     public void setRestart(Boolean restart) {
         this.restart = restart;
     }
 
-    @SuppressWarnings("unused")
     public void setServerCommunicator(ServerCommunicator serverCommunicator) {
         this.serverCommunicator = serverCommunicator;
     }
 
-    @SuppressWarnings("unused")
     public String[] getArgs() {
         return args;
     }

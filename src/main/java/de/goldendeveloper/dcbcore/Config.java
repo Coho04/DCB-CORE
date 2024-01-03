@@ -9,9 +9,14 @@ import java.util.Properties;
 public class Config {
 
     public Dotenv dotenv;
+    public static String path = null;
 
     public Config() {
-        dotenv = Dotenv.load();
+        if(path != null) {
+            dotenv = Dotenv.configure().directory(path).load();
+        } else {
+            dotenv = Dotenv.load();
+        }
     }
 
     @SuppressWarnings("unused")
@@ -20,11 +25,11 @@ public class Config {
     }
 
     public String getProjektVersion() {
-        return loadProperties(this.getClass().getClassLoader().getResourceAsStream("project.properties")).getProperty("version");
+        return getProperty("version");
     }
 
     public String getProjektName() {
-        return loadProperties(this.getClass().getClassLoader().getResourceAsStream("project.properties")).getProperty("name");
+        return getProperty("name");
     }
 
     public String getSentryDNS() {
@@ -47,13 +52,13 @@ public class Config {
         return dotenv.get("SERVER_HOSTNAME");
     }
 
-    public Properties loadProperties(InputStream inputStream) {
+    public String getProperty(String key) {
         Properties properties = new Properties();
         try {
-            properties.load(inputStream);
+            properties.load(this.getClass().getClassLoader().getResourceAsStream("project.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return properties;
+        return properties.getProperty(key);
     }
 }
