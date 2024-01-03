@@ -73,7 +73,7 @@ public class Discord {
         }
     }
 
-    private void registerDefaultCommand() {
+    void registerDefaultCommand() {
         LinkedList<CommandInterface> defaultCommands = new LinkedList<>();
         Collections.addAll(defaultCommands, new BotStats(), new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
         this.commands = defaultCommands

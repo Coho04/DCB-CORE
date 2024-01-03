@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -47,6 +48,6 @@ public class DiscordTest {
 
         LinkedList<CommandInterface> actualCommands = discord.getCommands();
 
-        assertTrue(!actualCommands.containsAll(removedCommands), "Removed commands should not be registered");
+        assertFalse(actualCommands.containsAll(removedCommands), "Removed commands should not be registered");
     }
 }

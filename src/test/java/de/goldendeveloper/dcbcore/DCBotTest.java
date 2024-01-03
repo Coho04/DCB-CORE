@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DCBotTest {
 
     private DCBot bot;
-    private String[] args = {"restart"};
+    private final String[] args = {"restart"};
     private LinkedList<ListenerAdapter> events;
     private LinkedList<CommandInterface> commandDataList;
     private LinkedList<GatewayIntent> gatewayIntentList;
@@ -66,11 +66,6 @@ public class DCBotTest {
     }
 
     @Test
-    public void shouldReturnWithServerCommunicatorStatus() {
-        assertTrue(bot.getWithServerCommunicator());
-    }
-
-    @Test
     public void shouldSetAndReturnDiscord() {
         Discord discord = Mockito.mock(Discord.class);
         bot.setDiscord(discord);
@@ -79,9 +74,9 @@ public class DCBotTest {
 
     @Test
     public void shouldSetAndReturnServerCommunicator() {
-        ServerCommunicator serverCommunicator = Mockito.mock(ServerCommunicator.class);
-        bot.setServerCommunicator(serverCommunicator);
-        assertEquals(serverCommunicator, bot.getServerCommunicator());
+        ClientToServer serverCommunicator = Mockito.mock(ClientToServer.class);
+        bot.setClientToServer(serverCommunicator);
+        assertEquals(serverCommunicator, bot.getClientToServer());
     }
 
     @Test
