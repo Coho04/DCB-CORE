@@ -1,6 +1,6 @@
 package de.goldendeveloper.dcbcore;
 
-import de.goldendeveloper.dcbcore.errors.SentryHandler;
+import de.goldendeveloper.dcbcore.enums.CommunicationStatus;
 import io.sentry.Sentry;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -30,7 +30,7 @@ public class ClientToServer extends WebSocketClient {
     public void onOpen(ServerHandshake handshakeData) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", botName);
-        jsonObject.put("type", "START");
+        jsonObject.put("type", CommunicationStatus.START);
         jsonObject.put("image", botImage);
         jsonObject.put("invite", botInvite);
         jsonObject.put("server", guildIds);
@@ -45,7 +45,6 @@ public class ClientToServer extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        System.out.println("Verbindung geschlossen");
         if (remote) {
             System.out.println("Verbindung geschlossen, weil der Server die Verbindung geschlossen hat.");
         } else {
@@ -57,5 +56,14 @@ public class ClientToServer extends WebSocketClient {
     public void onError(Exception ex) {
         Sentry.captureException(ex);
         System.out.println(ex.getMessage());
+    }
+
+    public void updateServer(String guild, DCBot dcBot, CommunicationStatus action) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", dcBot.getConfig().getProjektName());
+        jsonObject.put("type", action);
+        jsonObject.put("server", dcBot.getDiscord().getBot().getGuilds().size());
+        jsonObject.put("guild", guild);
+        send(jsonObject.toString());
     }
 }

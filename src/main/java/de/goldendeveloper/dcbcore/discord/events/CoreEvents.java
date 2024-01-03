@@ -4,6 +4,7 @@ import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookEmbed;
 import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
 import de.goldendeveloper.dcbcore.DCBot;
+import de.goldendeveloper.dcbcore.enums.CommunicationStatus;
 import io.sentry.Sentry;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
@@ -51,20 +52,20 @@ public class CoreEvents extends ListenerAdapter {
                 new WebhookClientBuilder(dcBot.getConfig().getDiscordWebhook()).build().send(embed.build()).thenRun(() -> System.exit(0));
             }
         } catch (Exception exception) {
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
             Sentry.captureException(exception);
         }
     }
 
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent e) {
-        dcBot.getServerCommunicator().addServer(e.getGuild().getId(), dcBot);
+        dcBot.getClientToServer().updateServer(e.getGuild().getId(), dcBot, CommunicationStatus.ADD);
         e.getJDA().getPresence().setActivity(Activity.playing("/help | " + e.getJDA().getGuilds().size() + " Servern"));
     }
 
     @Override
     public void onGuildLeave(@NotNull GuildLeaveEvent e) {
-        dcBot.getServerCommunicator().removeServer(e.getGuild().getId(), dcBot);
+        dcBot.getClientToServer().updateServer(e.getGuild().getId(), dcBot, CommunicationStatus.REMOVE);
         e.getJDA().getPresence().setActivity(Activity.playing("/help | " + e.getJDA().getGuilds().size() + " Servern"));
     }
 }

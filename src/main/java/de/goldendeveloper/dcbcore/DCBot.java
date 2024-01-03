@@ -123,6 +123,10 @@ public class DCBot {
         return events;
     }
 
+    public ClientToServer getClientToServer() {
+        return clientToServer;
+    }
+
     public LinkedList<GatewayIntent> getGatewayIntentList() {
         return gatewayIntentList;
     }
