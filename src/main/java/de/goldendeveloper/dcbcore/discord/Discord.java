@@ -64,9 +64,6 @@ public class Discord {
             this.registerDefaultCommand();
             if (dcBot.getDeployment()) {
                 sendDiscordOnlineMessage();
-                if (dcBot.getWithServerCommunicator()) {
-                    dcBot.getServerCommunicator().startBot(bot);
-                }
             }
             bot.getPresence().setActivity(Activity.playing("/help | " + bot.getGuilds().size() + " Servern"));
             commands.stream().filter(Objects::nonNull).forEach(commandInterface -> bot.upsertCommand(commandInterface.commandData()).queue());

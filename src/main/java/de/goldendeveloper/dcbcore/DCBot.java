@@ -6,10 +6,16 @@ import de.goldendeveloper.dcbcore.interfaces.CommandInterface;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 import io.sentry.SpanStatus;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class DCBot {
@@ -20,8 +26,7 @@ public class DCBot {
     private final LinkedList<GatewayIntent> gatewayIntentList = new LinkedList<>();
     private Discord discord;
     private final Config config;
-    private ServerCommunicator serverCommunicator;
-    private final boolean withServerCommunicator;
+    private ClientToServer clientToServer;
     private boolean restart = false;
     private boolean deployment = true;
     private final String[] args;
@@ -43,15 +48,20 @@ public class DCBot {
             this.gatewayIntentList.addAll(gatewayIntentList);
         if (removedCommandDataList != null)
             this.removedCommandDataList.addAll(removedCommandDataList);
-        this.withServerCommunicator = withServerCommunicator;
         this.config = new Config();
         new SentryHandler(this.config.getSentryDNS(), this);
         ITransaction transaction = Sentry.startTransaction("Application()", "task");
         try {
-            if (getDeployment() && withServerCommunicator) {
-                serverCommunicator = new ServerCommunicator(config.getServerHostname(), config.getServerPort());
-            }
             discord = new Discord(config.getDiscordToken(), this);
+            if (getDeployment() && withServerCommunicator) {
+                clientToServer = new ClientToServer(new URI("ws://" + config.getServerHostname() + ":" + config.getServerPort()),
+                        config.getProjektName(),
+                        discord.getBot().getSelfUser().getAvatarUrl(),
+                        discord.getBot().getInviteUrl(Permission.ADMINISTRATOR),
+                        getGuildIDsFromGuilds(discord.getBot()),
+                        getCommandNameFromCommands(discord.getBot().retrieveCommands().complete()));
+                clientToServer.connect();
+            }
         } catch (Exception e) {
             transaction.setThrowable(e);
             transaction.setStatus(SpanStatus.INTERNAL_ERROR);
@@ -74,8 +84,8 @@ public class DCBot {
         this.restart = restart;
     }
 
-    public void setServerCommunicator(ServerCommunicator serverCommunicator) {
-        this.serverCommunicator = serverCommunicator;
+    public void setClientToServer(ClientToServer clientToServer) {
+        this.clientToServer = clientToServer;
     }
 
     public String[] getArgs() {
@@ -106,19 +116,27 @@ public class DCBot {
         return deployment;
     }
 
-    public ServerCommunicator getServerCommunicator() {
-        return serverCommunicator;
-    }
-
-    public boolean getWithServerCommunicator() {
-        return withServerCommunicator;
-    }
-
     public LinkedList<ListenerAdapter> getEvents() {
         return events;
     }
 
+    public ClientToServer getClientToServer() {
+        return clientToServer;
+    }
+
     public LinkedList<GatewayIntent> getGatewayIntentList() {
         return gatewayIntentList;
+    }
+
+    private List<String> getGuildIDsFromGuilds(JDA jda) {
+        List<String> ids = new ArrayList<>();
+        jda.getGuilds().forEach(guild -> ids.add(guild.getId()));
+        return ids;
+    }
+
+    private List<String> getCommandNameFromCommands(List<Command> commands) {
+        List<String> commandNames = new ArrayList<>();
+        commands.forEach(command -> commandNames.add(command.getName()));
+        return commandNames;
     }
 }

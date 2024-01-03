@@ -57,7 +57,7 @@ public class Config {
         try {
             properties.load(this.getClass().getClassLoader().getResourceAsStream("project.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return properties.getProperty(key);
     }
