@@ -17,7 +17,7 @@ public interface CommandInterface {
     default void runCommandAutoComplete(CommandAutoCompleteInteractionEvent e, DCBot dcBot) {
     }
 
-    default boolean hasRole(Role role, Member m) {
-        return m.getRoles().stream().filter(r -> r == role).map(r -> true).findFirst().orElse(false);
+    default boolean hasRole(Role role, Member member) {
+        return member.getRoles().stream().filter(r -> r == role).map(r -> true).findFirst().orElse(false);
     }
 }

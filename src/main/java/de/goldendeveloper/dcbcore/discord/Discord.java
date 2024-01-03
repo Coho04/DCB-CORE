@@ -27,7 +27,7 @@ public class Discord {
 
     private JDA bot;
     private final DCBot dcBot;
-    private final LinkedList<CommandInterface> commands;
+    private LinkedList<CommandInterface> commands;
 
     public Discord(String botToken, DCBot dcBot) {
         this.commands = dcBot.getCommandDataList();
@@ -69,14 +69,17 @@ public class Discord {
             commands.stream().filter(Objects::nonNull).forEach(commandInterface -> bot.upsertCommand(commandInterface.commandData()).queue());
         } catch (InterruptedException e) {
             Sentry.captureException(e);
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
-    void registerDefaultCommand() {
+    private void registerDefaultCommand() {
         LinkedList<CommandInterface> defaultCommands = new LinkedList<>();
         Collections.addAll(defaultCommands, new BotStats(), new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
-        List<CommandInterface> d = defaultCommands.stream().filter(commandInterface -> !this.dcBot.getRemovedCommandDataList().contains(commandInterface)).collect(Collectors.toList());
+        this.commands = defaultCommands
+                .stream()
+                .filter(commandInterface -> !this.dcBot.getRemovedCommandDataList().contains(commandInterface))
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     public LinkedList<CommandInterface> getCommands() {
@@ -106,7 +109,7 @@ public class Discord {
         new WebhookClientBuilder(dcBot.getConfig().getDiscordWebhook()).build().send(embed.build());
     }
 
-    public Boolean hasPermissions(SlashCommandInteractionEvent e) {
+    public boolean hasPermissions(SlashCommandInteractionEvent e) {
         return e.getUser() == e.getJDA().getUserById(428811057700536331L) || e.getUser() == e.getJDA().getUserById(513306244371447828L);
     }
 }

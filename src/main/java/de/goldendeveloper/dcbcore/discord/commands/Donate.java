@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 public class Donate implements CommandInterface {
+
     @Override
     public CommandData commandData() {
         return Commands.slash("donate", "Zeigt dir wie du uns Unterstützen kannst");

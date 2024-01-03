@@ -10,7 +10,7 @@ public class Shutdown implements CommandInterface {
 
     @Override
     public CommandData commandData() {
-        return Commands.slash("shutdown", "Fahre den Bot herunter!");
+        return Commands.slash("shutdown", "Starte den Shutdown-Prozess für den Bot.");
     }
 
     @Override

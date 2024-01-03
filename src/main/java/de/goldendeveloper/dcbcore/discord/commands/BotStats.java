@@ -14,6 +14,7 @@ import java.awt.Color;
 
 @SuppressWarnings("ConstantConditions")
 public class BotStats implements CommandInterface {
+
     @Override
     public CommandData commandData() {
         return Commands.slash("bot-stats", "Zeigt dir die Bot Statistiken");
