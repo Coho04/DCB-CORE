@@ -27,7 +27,7 @@ public class Discord {
 
     private JDA bot;
     private final DCBot dcBot;
-    private LinkedList<CommandInterface> commands;
+    private final LinkedList<CommandInterface> commands;
 
     public Discord(String botToken, DCBot dcBot) {
         this.commands = dcBot.getCommandDataList();
@@ -76,10 +76,10 @@ public class Discord {
     void registerDefaultCommand() {
         LinkedList<CommandInterface> defaultCommands = new LinkedList<>();
         Collections.addAll(defaultCommands, new BotStats(), new BotOwner(), new Donate(), new Help(), new Invite(), new Join(), new Ping(), new Restart(), new Shutdown());
-        this.commands = defaultCommands
+        this.commands.addAll(defaultCommands
                 .stream()
                 .filter(commandInterface -> !this.dcBot.getRemovedCommandDataList().contains(commandInterface))
-                .collect(Collectors.toCollection(LinkedList::new));
+                .collect(Collectors.toCollection(LinkedList::new)));
     }
 
     public LinkedList<CommandInterface> getCommands() {
