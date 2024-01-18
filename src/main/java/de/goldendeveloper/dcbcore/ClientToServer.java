@@ -50,6 +50,16 @@ public class ClientToServer extends WebSocketClient {
         } else {
             System.out.println("Verbindung geschlossen, weil der Client die Verbindung geschlossen hat.");
         }
+
+        new Thread(() -> {
+            try {
+                System.out.println("Reconnect to Server");
+                Thread.sleep(5000);
+                ClientToServer.this.reconnectBlocking();
+            } catch (InterruptedException | IllegalStateException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @Override
