@@ -6,7 +6,7 @@
 
     <groupId>de.goldendeveloper</groupId>
     <artifactId>DCB-Core</artifactId>
-    <version>1.8.1</version>
+    <version>1.8.2</version>
     <url>https://github.com/Golden-Developer/GD-DC-CORE</url>
 
     <properties>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>de.goldendeveloper</groupId>
             <artifactId>MYSQL-Api</artifactId>
-            <version>5.7.1</version>
+            <version>5.7.2</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
@@ -126,17 +126,6 @@
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>
             <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>5.10.0</version>
         </dependency>
         <dependency>
             <groupId>org.java-websocket</groupId>
