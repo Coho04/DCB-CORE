@@ -59,7 +59,9 @@ public class DCBot {
                         discord.getBot().getSelfUser().getAvatarUrl(),
                         discord.getBot().getInviteUrl(Permission.ADMINISTRATOR),
                         getGuildIDsFromGuilds(discord.getBot()),
-                        getCommandNameFromCommands(discord.getBot().retrieveCommands().complete()));
+                        getCommandNameFromCommands(discord.getBot().retrieveCommands().complete()),
+                        this
+                );
                 clientToServer.connect();
             }
         } catch (Exception e) {

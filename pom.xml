@@ -6,7 +6,7 @@
 
     <groupId>de.goldendeveloper</groupId>
     <artifactId>DCB-Core</artifactId>
-    <version>1.8.2</version>
+    <version>1.8.3</version>
     <url>https://github.com/Golden-Developer/GD-DC-CORE</url>
 
     <properties>
