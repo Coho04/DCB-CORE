@@ -6,7 +6,7 @@
 
     <groupId>de.goldendeveloper</groupId>
     <artifactId>DCB-Core</artifactId>
-    <version>1.8.3</version>
+    <version>1.8.4</version>
     <url>https://github.com/Golden-Developer/GD-DC-CORE</url>
 
     <properties>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>de.goldendeveloper</groupId>
             <artifactId>MYSQL-Api</artifactId>
-            <version>5.7.3</version>
+            <version>5.7.4</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>

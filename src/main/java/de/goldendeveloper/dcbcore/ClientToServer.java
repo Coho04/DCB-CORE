@@ -7,6 +7,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
 
+import java.net.BindException;
 import java.net.URI;
 import java.util.List;
 
@@ -68,8 +69,11 @@ public class ClientToServer extends WebSocketClient {
 
     @Override
     public void onError(Exception ex) {
-        System.out.println(ex.getMessage());
-        Sentry.captureException(ex);
+        if (ex instanceof BindException) {
+            System.out.println(ex.getMessage());
+        } else {
+            Sentry.captureException(ex);
+        }
     }
 
     public void updateServer(String guild, DCBot dcBot, CommunicationStatus action) {
