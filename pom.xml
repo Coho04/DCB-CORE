@@ -5,12 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.goldendeveloper</groupId>
-    <artifactId>DCB-Core</artifactId>
-    <version>1.8.6</version>
+    <artifactId>gd-dc-core</artifactId>
+    <version>1.8.7</version>
+    <packaging>jar</packaging>
     <url>https://github.com/Golden-Developer/GD-DC-CORE</url>
 
     <properties>
-        <java.version>20</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -34,8 +36,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -78,13 +80,12 @@
         </plugins>
     </build>
 
-
-    <repositories>
+    <distributionManagement>
         <repository>
-            <id>Golden-Developer</id>
-            <url>https://nexus.golden-developer.de/repository/maven-public/</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/Golden-Developer/gd-dc-core</url>
         </repository>
-    </repositories>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -109,8 +110,8 @@
         </dependency>
         <dependency>
             <groupId>de.goldendeveloper</groupId>
-            <artifactId>MYSQL-Api</artifactId>
-            <version>5.7.7</version>
+            <artifactId>mysql-api</artifactId>
+            <version>5.7.8</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
