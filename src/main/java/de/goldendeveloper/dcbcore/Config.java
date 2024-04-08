@@ -3,7 +3,6 @@ package de.goldendeveloper.dcbcore;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {

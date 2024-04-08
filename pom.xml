@@ -80,12 +80,12 @@
         </plugins>
     </build>
 
-    <distributionManagement>
+    <repositories>
         <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/Golden-Developer/gd-dc-core</url>
+            <id>Golden-Developer</id>
+            <url>https://nexus.golden-developer.de/repository/maven-public/</url>
         </repository>
-    </distributionManagement>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -110,8 +110,8 @@
         </dependency>
         <dependency>
             <groupId>de.goldendeveloper</groupId>
-            <artifactId>mysql-api</artifactId>
-            <version>5.7.8</version>
+            <artifactId>MYSQL-Api</artifactId>
+            <version>5.7.7</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
