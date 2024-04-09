@@ -27,7 +27,7 @@ public class Restart implements CommandInterface {
 
     public static void restartBot(JDA jda, DCBot dcBot) {
         try {
-            String[] commands = {"screen -AmdS " + dcBot.getConfig().getProjektName() + " java -Xms1096M -Xmx1096M -jar " + dcBot.getConfig().getProjektName() + "-" + dcBot.getConfig().getProjektVersion() + ".jar restart"};
+            String[] commands = {"/usr/bin/screen -AmdS " + dcBot.getConfig().getProjektName() + " java -Xms1096M -Xmx1096M -jar " + dcBot.getConfig().getProjektName() + "-" + dcBot.getConfig().getProjektVersion() + ".jar restart"};
             Process p = Runtime.getRuntime().exec(commands);
             p.waitFor();
             jda.shutdown();
