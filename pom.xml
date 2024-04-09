@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.goldendeveloper</groupId>
-    <artifactId>gd-dc-core</artifactId>
+    <artifactId>DCB-Core</artifactId>
     <version>1.8.8</version>
     <packaging>jar</packaging>
     <url>https://github.com/Golden-Developer/GD-DC-CORE</url>
