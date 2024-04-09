@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 public class Restart implements CommandInterface {
 
     @Override
@@ -27,7 +30,9 @@ public class Restart implements CommandInterface {
 
     public static void restartBot(JDA jda, DCBot dcBot) {
         try {
-            String[] commands = {"/usr/bin/screen -AmdS " + dcBot.getConfig().getProjektName() + " java -Xms1096M -Xmx1096M -jar " + dcBot.getConfig().getProjektName() + "-" + dcBot.getConfig().getProjektVersion() + ".jar restart"};
+            String jarFileName = dcBot.getConfig().getProjektName() + "-" + dcBot.getConfig().getProjektVersion() + ".jar";
+            String absolutePath = Paths.get(".").toAbsolutePath().normalize() + File.separator + jarFileName;
+            String[] commands = {"screen -AmdS " + dcBot.getConfig().getProjektName() + " java -Xms1096M -Xmx1096M -jar " + absolutePath + " restart"};
             Process p = Runtime.getRuntime().exec(commands);
             p.waitFor();
             jda.shutdown();
