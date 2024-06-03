@@ -84,7 +84,6 @@ public class Restart implements CommandInterface {
         ProcessBuilder processBuilder = new ProcessBuilder(commands);
         processBuilder.directory(new File(String.valueOf(path)));
 
-        Process process = processBuilder.start();
-        return process;
+        return processBuilder.start();
     }
 }
