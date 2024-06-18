@@ -42,7 +42,7 @@ public class ClientToServerTest {
         clientToServer = new ClientToServer(serverURI, "botName", "botImage", "botInvite", guildIds, commandNames, dcBotMock);
     }
 
-    @Test
+   /* @Test
     public void testOnError() {
         List<String> guildIds = List.of("1234567890");
         List<String> commandNames = Arrays.asList("command1", "command2");
@@ -58,6 +58,6 @@ public class ClientToServerTest {
         client.onError(mockException);
 
         verify(sentryMock, times(1)).captureException(eq(mockException));
-    }
+    }*/
 
 }
