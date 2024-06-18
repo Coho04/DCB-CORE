@@ -1,7 +1,7 @@
-package de.goldendeveloper.dcbcore;
+package io.github.coho04.dcbcore;
 
-import de.goldendeveloper.dcbcore.discord.commands.Restart;
-import de.goldendeveloper.dcbcore.enums.CommunicationStatus;
+import io.github.coho04.dcbcore.discord.commands.Restart;
+import io.github.coho04.dcbcore.enums.CommunicationStatus;
 import io.sentry.Sentry;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;

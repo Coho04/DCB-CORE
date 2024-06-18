@@ -1,4 +1,4 @@
-package de.goldendeveloper.dcbcore.enums;
+package io.github.coho04.dcbcore.enums;
 
 public enum CommunicationStatus {
     ADD,

@@ -1,10 +1,10 @@
-package de.goldendeveloper.dcbcore.discord.events;
+package io.github.coho04.dcbcore.discord.events;
 
 import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookEmbed;
 import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
-import de.goldendeveloper.dcbcore.DCBot;
-import de.goldendeveloper.dcbcore.enums.CommunicationStatus;
+import io.github.coho04.dcbcore.DCBot;
+import io.github.coho04.dcbcore.enums.CommunicationStatus;
 import io.sentry.Sentry;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;

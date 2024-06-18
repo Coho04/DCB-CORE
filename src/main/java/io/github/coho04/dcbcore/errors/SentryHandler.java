@@ -1,6 +1,6 @@
-package de.goldendeveloper.dcbcore.errors;
+package io.github.coho04.dcbcore.errors;
 
-import de.goldendeveloper.dcbcore.DCBot;
+import io.github.coho04.dcbcore.DCBot;
 import io.sentry.Sentry;
 
 public class SentryHandler {

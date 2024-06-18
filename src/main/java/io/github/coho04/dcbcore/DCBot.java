@@ -1,8 +1,8 @@
-package de.goldendeveloper.dcbcore;
+package io.github.coho04.dcbcore;
 
-import de.goldendeveloper.dcbcore.discord.Discord;
-import de.goldendeveloper.dcbcore.errors.SentryHandler;
-import de.goldendeveloper.dcbcore.interfaces.CommandInterface;
+import io.github.coho04.dcbcore.discord.Discord;
+import io.github.coho04.dcbcore.errors.SentryHandler;
+import io.github.coho04.dcbcore.interfaces.CommandInterface;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 import io.sentry.SpanStatus;

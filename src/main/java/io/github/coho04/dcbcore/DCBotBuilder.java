@@ -1,6 +1,6 @@
-package de.goldendeveloper.dcbcore;
+package io.github.coho04.dcbcore;
 
-import de.goldendeveloper.dcbcore.interfaces.CommandInterface;
+import io.github.coho04.dcbcore.interfaces.CommandInterface;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 

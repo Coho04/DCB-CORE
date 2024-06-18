@@ -1,6 +1,6 @@
-package de.goldendeveloper.dcbcore.interfaces;
+package io.github.coho04.dcbcore.interfaces;
 
-import de.goldendeveloper.dcbcore.DCBot;
+import io.github.coho04.dcbcore.DCBot;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;

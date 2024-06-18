@@ -1,4 +1,4 @@
-package de.goldendeveloper.dcbcore;
+package io.github.coho04.dcbcore;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
