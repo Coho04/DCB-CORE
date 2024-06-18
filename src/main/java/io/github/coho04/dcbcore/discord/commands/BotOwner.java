@@ -16,6 +16,10 @@ public class BotOwner implements CommandInterface {
 
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
+        if (e == null || dcBot == null) {
+            return;
+        }
+
         e.getInteraction().reply("Der Bot Owner ist die Developer Organisation Golden-Developer")
                 .addActionRow(Button.link("https://dc.golden-developer.de/", "Zum Server"))
                 .queue();

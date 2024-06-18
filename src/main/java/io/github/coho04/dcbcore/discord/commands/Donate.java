@@ -16,6 +16,9 @@ public class Donate implements CommandInterface {
 
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
+        if (e == null || dcBot == null) {
+            return;
+        }
         e.getInteraction()
                 .reply("Wenn du uns etwas Spenden möchtest dann kannst du dies gerne in dem du unten auf den Button kickst machen! \n" + "Vielen Danke <3 !")
                 .addActionRow(Button.link("https://donate.golden-developer.de/", "Zur Spende"))

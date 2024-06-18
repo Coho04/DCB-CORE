@@ -15,6 +15,10 @@ public class Ping implements CommandInterface {
 
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
+        if (e == null || dcBot == null) {
+            return;
+        }
+
         long time = System.currentTimeMillis();
         e.getInteraction().reply("Pong!").queue(response -> response.sendMessage("Pong:" + System.currentTimeMillis() + time + " ms").queue());
     }

@@ -22,6 +22,9 @@ public class BotStats implements CommandInterface {
 
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
+        if (e == null || dcBot == null) {
+            return;
+        }
         Guild mainServer = e.getJDA().getGuildById(Discord.MAIN_GUILD);
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("**Server Stats**");

@@ -21,6 +21,10 @@ public class Help implements CommandInterface {
 
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
+        if (e == null || dcBot == null) {
+            return;
+        }
+
         List<Command> cmd = e.getJDA().retrieveCommands().complete();
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("**Help Commands**");

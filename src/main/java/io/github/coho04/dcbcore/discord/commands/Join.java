@@ -18,6 +18,10 @@ public class Join implements CommandInterface {
 
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
+        if (e == null || dcBot == null) {
+            return;
+        }
+
         Guild guild = e.getJDA().getGuildById(Discord.MAIN_GUILD);
         if (guild != null) {
             e.getInteraction().reply("Mit dem Button unten kannst du unserem Server beitreten!")

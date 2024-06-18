@@ -17,6 +17,10 @@ public class Invite implements CommandInterface {
 
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
+        if (e == null || dcBot == null) {
+            return;
+        }
+
         e.getInteraction().reply("Mit dem Button kannst du mich auf deinen Server einladen!")
                 .addActionRow(
                         Button.link(e.getJDA().setRequiredScopes("applications.commands")

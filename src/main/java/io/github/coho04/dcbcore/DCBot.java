@@ -5,7 +5,6 @@ import io.github.coho04.dcbcore.errors.SentryHandler;
 import io.github.coho04.dcbcore.interfaces.CommandInterface;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.SpanStatus;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -24,6 +23,7 @@ public class DCBot {
     private final LinkedList<CommandInterface> commandDataList = new LinkedList<>();
     private final LinkedList<CommandInterface> removedCommandDataList = new LinkedList<>();
     private final LinkedList<GatewayIntent> gatewayIntentList = new LinkedList<>();
+
     private Discord discord;
     private final Config config;
     private ClientToServer clientToServer;
@@ -36,6 +36,7 @@ public class DCBot {
             restart = true;
         }
         this.args = args;
+        this.config = new Config();
         String device = System.getProperty("os.name").split(" ")[0];
         if (device.equalsIgnoreCase("windows") || device.equalsIgnoreCase("Mac")) {
             deployment = false;
@@ -48,12 +49,24 @@ public class DCBot {
             this.gatewayIntentList.addAll(gatewayIntentList);
         if (removedCommandDataList != null)
             this.removedCommandDataList.addAll(removedCommandDataList);
-        this.config = new Config();
-        new SentryHandler(this.config.getSentryDNS(), this);
-        ITransaction transaction = Sentry.startTransaction("Application()", "task");
+
+
+        setupBot(withServerCommunicator);
+    }
+
+    private boolean detectDeployment() {
+        String device = System.getProperty("os.name").split(" ")[0];
+        return !device.equalsIgnoreCase("windows") && !device.equalsIgnoreCase("Mac");
+    }
+
+    private void setupBot(boolean withServerCommunicator) {
         try {
+            SentryHandler sentryHandler = new SentryHandler(config.getSentryDNS(), this);
+            ITransaction transaction = Sentry.startTransaction("Application()", "task");
+
             discord = new Discord(config.getDiscordToken(), this);
-            if (getDeployment() && withServerCommunicator) {
+
+            if (deployment && withServerCommunicator) {
                 clientToServer = new ClientToServer(new URI("ws://" + config.getServerHostname() + ":" + config.getServerPort()),
                         config.getProjektName(),
                         discord.getBot().getSelfUser().getAvatarUrl(),
@@ -64,13 +77,11 @@ public class DCBot {
                 );
                 clientToServer.connect();
             }
+
+            transaction.finish();
         } catch (Exception e) {
-            transaction.setThrowable(e);
-            transaction.setStatus(SpanStatus.INTERNAL_ERROR);
             Sentry.captureException(e);
             System.out.println(e.getMessage());
-        } finally {
-            transaction.finish();
         }
     }
 
@@ -130,13 +141,13 @@ public class DCBot {
         return gatewayIntentList;
     }
 
-    private List<String> getGuildIDsFromGuilds(JDA jda) {
+    List<String> getGuildIDsFromGuilds(JDA jda) {
         List<String> ids = new ArrayList<>();
         jda.getGuilds().forEach(guild -> ids.add(guild.getId()));
         return ids;
     }
 
-    private List<String> getCommandNameFromCommands(List<Command> commands) {
+    List<String> getCommandNameFromCommands(List<Command> commands) {
         List<String> commandNames = new ArrayList<>();
         commands.forEach(command -> commandNames.add(command.getName()));
         return commandNames;

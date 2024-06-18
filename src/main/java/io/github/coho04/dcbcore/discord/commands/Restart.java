@@ -22,6 +22,10 @@ public class Restart implements CommandInterface {
 
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
+        if (e == null || dcBot == null) {
+            return;
+        }
+
         if (dcBot.getDiscord().hasPermissions(e)) {
             e.getInteraction().reply("Der Discord Bot [" + e.getJDA().getSelfUser().getName() + "] wird nun neugestartet!").queue();
             restartBot(e.getJDA(), dcBot);
