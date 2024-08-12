@@ -6,7 +6,7 @@
 
     <groupId>io.github.coho04</groupId>
     <artifactId>DCB-Core</artifactId>
-    <version>1.9.4</version>
+    <version>1.9.5</version>
     <description>Integrate the Discord Bot Core with new bots for a seamless setup experience</description>
     <url>https://github.com/Coho04/DCB-CORE</url>
 

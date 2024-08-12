@@ -64,6 +64,7 @@ public class ClientToServer extends WebSocketClient {
     @Override
     public void onClose(int code, String reason, boolean remote) {
         System.out.println("Verbindung geschlossen, weil der " + (remote ? "Server" : "Client") + " die Verbindung geschlossen hat.");
+        System.out.println("Grund: " + reason);
         reconnect(30000);
     }
 
