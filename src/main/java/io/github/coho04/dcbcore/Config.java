@@ -43,14 +43,6 @@ public class Config {
         return dotenv.get("DISCORD_TOKEN");
     }
 
-    public int getServerPort() {
-        return Integer.parseInt(dotenv.get("SERVER_PORT"));
-    }
-
-    public String getServerHostname() {
-        return dotenv.get("SERVER_HOSTNAME");
-    }
-
     public String getProperty(String key) {
         Properties properties = new Properties();
         try {

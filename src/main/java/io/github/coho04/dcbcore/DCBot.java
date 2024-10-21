@@ -6,12 +6,10 @@ import io.github.coho04.dcbcore.interfaces.CommandInterface;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +24,6 @@ public class DCBot {
 
     private Discord discord;
     private final Config config;
-    private ClientToServer clientToServer;
     private boolean restart = false;
     private boolean deployment = true;
     private final String[] args;
@@ -63,21 +60,7 @@ public class DCBot {
         try {
             SentryHandler sentryHandler = new SentryHandler(config.getSentryDNS(), this);
             ITransaction transaction = Sentry.startTransaction("Application()", "task");
-
             discord = new Discord(config.getDiscordToken(), this);
-
-            if (deployment && withServerCommunicator) {
-                clientToServer = new ClientToServer(new URI("ws://" + config.getServerHostname() + ":" + config.getServerPort()),
-                        config.getProjektName(),
-                        discord.getBot().getSelfUser().getAvatarUrl(),
-                        discord.getBot().getInviteUrl(Permission.ADMINISTRATOR),
-                        getGuildIDsFromGuilds(discord.getBot()),
-                        getCommandNameFromCommands(discord.getBot().retrieveCommands().complete()),
-                        this
-                );
-                clientToServer.connect();
-            }
-
             transaction.finish();
         } catch (Exception e) {
             Sentry.captureException(e);
@@ -95,10 +78,6 @@ public class DCBot {
 
     public void setRestart(Boolean restart) {
         this.restart = restart;
-    }
-
-    public void setClientToServer(ClientToServer clientToServer) {
-        this.clientToServer = clientToServer;
     }
 
     public String[] getArgs() {
@@ -131,10 +110,6 @@ public class DCBot {
 
     public LinkedList<ListenerAdapter> getEvents() {
         return events;
-    }
-
-    public ClientToServer getClientToServer() {
-        return clientToServer;
     }
 
     public LinkedList<GatewayIntent> getGatewayIntentList() {
