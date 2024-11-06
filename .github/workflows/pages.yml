@@ -57,7 +57,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          mv target/site/apidocs $HOME/javadocs
+          mv target/reports/apidocs $HOME/javadocs
           cd $HOME
           git clone --depth 1 --branch gh-pages git@github.com:Coho04/DCB-CORE.git gh-pages
           cd gh-pages
