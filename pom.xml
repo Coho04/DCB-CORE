@@ -6,7 +6,7 @@
 
     <groupId>io.github.coho04</groupId>
     <artifactId>DCB-Core</artifactId>
-    <version>1.9.6</version>
+    <version>1.9.7</version>
     <description>Integrate the Discord Bot Core with new bots for a seamless setup experience</description>
     <url>https://github.com/Coho04/DCB-CORE</url>
 
@@ -184,11 +184,24 @@
         </plugins>
     </build>
 
+    <repositories>
+<!-- LavaLink-Client         -->
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
             <version>5.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.arbjerg</groupId>
+            <artifactId>lavalink-client</artifactId>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>club.minnced</groupId>

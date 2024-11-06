@@ -3,6 +3,11 @@ package io.github.coho04.dcbcore.discord;
 import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookEmbed;
 import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
+import dev.arbjerg.lavalink.client.Helpers;
+import dev.arbjerg.lavalink.client.LavalinkClient;
+import dev.arbjerg.lavalink.client.NodeOptions;
+import dev.arbjerg.lavalink.client.loadbalancing.RegionGroup;
+import dev.arbjerg.lavalink.libraries.jda.JDAVoiceUpdateListener;
 import io.github.coho04.dcbcore.DCBot;
 import io.github.coho04.dcbcore.discord.commands.*;
 import io.github.coho04.dcbcore.discord.events.CoreEvents;
@@ -17,6 +22,7 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
+import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,11 +33,13 @@ public class Discord {
 
     private JDA bot;
     private final DCBot dcBot;
+    private LavalinkClient client;
     private final LinkedList<CommandInterface> commands;
 
-    public Discord(String botToken, DCBot dcBot) {
+    public Discord(String botToken, DCBot dcBot, boolean withLavaLink) {
         this.commands = dcBot.getCommandDataList();
         this.dcBot = dcBot;
+
         try {
             JDABuilder botBuilder = JDABuilder.createDefault(botToken)
                     .setChunkingFilter(ChunkingFilter.ALL)
@@ -54,6 +62,23 @@ public class Discord {
                     .addEventListeners(new CoreEvents(dcBot))
                     .setAutoReconnect(true)
                     .setContextEnabled(true);
+            if (withLavaLink) {
+                client = new LavalinkClient(
+                        Helpers.getUserIdFromToken(botToken)
+                );
+
+                String connection = dcBot.getConfig().getLavaLinkIP() + ":" + dcBot.getConfig().getLavaLinkPort();
+
+                client.addNode(new NodeOptions.Builder()
+                        .setName("Golden-Developer")
+                        .setServerUri(URI.create("ws://" + connection + "/bepis"))
+                        .setPassword(dcBot.getConfig().getLavaLinkPassword())
+                        .setRegionFilter(RegionGroup.EUROPE)
+                        .setHttpTimeout(5000L)
+                        .build());
+                botBuilder.setVoiceDispatchInterceptor(new JDAVoiceUpdateListener(client));
+            }
+
             if (!dcBot.getEvents().isEmpty()) {
                 dcBot.getEvents().forEach(botBuilder::addEventListeners);
             }
@@ -88,6 +113,10 @@ public class Discord {
 
     public JDA getBot() {
         return bot;
+    }
+
+    public LavalinkClient getClient() {
+        return client;
     }
 
     private void sendDiscordOnlineMessage() {

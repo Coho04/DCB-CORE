@@ -43,6 +43,18 @@ public class Config {
         return dotenv.get("DISCORD_TOKEN");
     }
 
+    public String getLavaLinkPassword() {
+        return dotenv.get("LAVALINK_PASSWORD");
+    }
+
+    public String getLavaLinkIP() {
+        return dotenv.get("LAVALINK_IP_ADDRESS");
+    }
+
+    public String getLavaLinkPort() {
+        return dotenv.get("LAVALINK_PORT");
+    }
+
     public String getProperty(String key) {
         Properties properties = new Properties();
         try {

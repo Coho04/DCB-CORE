@@ -16,15 +16,18 @@ public class DCBotBuilder {
     private final LinkedList<GatewayIntent> gatewayIntentList = new LinkedList<>();
     private final Boolean withServerCommunicator;
     private final String[] args;
+    private boolean withLavaLink;
 
     public DCBotBuilder(String[] args, boolean withServerCommunicator) {
         this.args = args;
         this.withServerCommunicator = withServerCommunicator;
+        withLavaLink = false;
     }
 
     public DCBotBuilder(String[] args) {
         this.args = args;
         this.withServerCommunicator = false;
+        withLavaLink = false;
     }
 
     public void registerGatewayIntents(GatewayIntent... gatewayIntents) {
@@ -45,6 +48,10 @@ public class DCBotBuilder {
         }
     }
 
+    public void setWithLavaLink(boolean withLavaLink) {
+        this.withLavaLink = withLavaLink;
+    }
+
     public void registerEvents(ListenerAdapter... listenerAdapters) {
         if (listenerAdapters != null){
             Collections.addAll(events, listenerAdapters);
@@ -52,6 +59,6 @@ public class DCBotBuilder {
     }
 
     public DCBot build() {
-        return new DCBot(this.args, this.withServerCommunicator, events, commandDataList, gatewayIntentList, removedCommandDataList);
+        return new DCBot(this.args, this.withServerCommunicator, events, commandDataList, gatewayIntentList, removedCommandDataList, withLavaLink);
     }
 }

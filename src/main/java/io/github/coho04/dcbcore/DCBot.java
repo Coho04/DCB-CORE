@@ -28,7 +28,15 @@ public class DCBot {
     private boolean deployment = true;
     private final String[] args;
 
-    public DCBot(String[] args, boolean withServerCommunicator, LinkedList<ListenerAdapter> events, LinkedList<CommandInterface> commandDataList, LinkedList<GatewayIntent> gatewayIntentList, LinkedList<CommandInterface> removedCommandDataList) {
+    public DCBot(
+            String[] args,
+            boolean withServerCommunicator,
+            LinkedList<ListenerAdapter> events,
+            LinkedList<CommandInterface> commandDataList,
+            LinkedList<GatewayIntent> gatewayIntentList,
+            LinkedList<CommandInterface> removedCommandDataList,
+            boolean withLavaLink
+    ) {
         if (args.length >= 1 && args[0].equalsIgnoreCase("restart")) {
             restart = true;
         }
@@ -48,7 +56,7 @@ public class DCBot {
             this.removedCommandDataList.addAll(removedCommandDataList);
 
 
-        setupBot(withServerCommunicator);
+        setupBot(withServerCommunicator, withLavaLink);
     }
 
     private boolean detectDeployment() {
@@ -56,11 +64,11 @@ public class DCBot {
         return !device.equalsIgnoreCase("windows") && !device.equalsIgnoreCase("Mac");
     }
 
-    private void setupBot(boolean withServerCommunicator) {
+    private void setupBot(boolean withServerCommunicator, boolean withLavaLink) {
         try {
             SentryHandler sentryHandler = new SentryHandler(config.getSentryDNS(), this);
             ITransaction transaction = Sentry.startTransaction("Application()", "task");
-            discord = new Discord(config.getDiscordToken(), this);
+            discord = new Discord(config.getDiscordToken(), this, withLavaLink);
             transaction.finish();
         } catch (Exception e) {
             Sentry.captureException(e);
