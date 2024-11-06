@@ -26,7 +26,7 @@ class DCBotTest {
         LinkedList<GatewayIntent> gatewayIntentList = new LinkedList<>();
         LinkedList<CommandInterface> removedCommandDataList = new LinkedList<>();
 
-        bot = new DCBot(new String[]{}, false, events, commandDataList, gatewayIntentList, removedCommandDataList);
+        bot = new DCBot(new String[]{}, false, events, commandDataList, gatewayIntentList, removedCommandDataList, false);
         bot.setDiscord(discordMock);
     }
 
