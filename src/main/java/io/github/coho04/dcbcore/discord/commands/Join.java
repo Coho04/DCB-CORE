@@ -9,13 +9,29 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
+/**
+ * The Join class implements the CommandInterface to handle the "join" slash command.
+ * This command provides users with a way to join the server.
+ */
 public class Join implements CommandInterface {
 
+    /**
+     * Returns the command data for the "join" slash command.
+     *
+     * @return CommandData object containing the command information.
+     */
     @Override
     public CommandData commandData() {
         return Commands.slash("join", "Zeigt dir wie du unserem Server beitreten kannst");
     }
 
+    /**
+     * Handles the execution of the "join" slash command.
+     * Sends a reply with a button to join the server.
+     *
+     * @param e     The SlashCommandInteractionEvent triggered by the command.
+     * @param dcBot The DCBot instance.
+     */
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
         if (e == null || dcBot == null) {

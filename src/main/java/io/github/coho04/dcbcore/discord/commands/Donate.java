@@ -7,13 +7,30 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
+/**
+ * The Donate class implements the CommandInterface to handle the "donate" slash command.
+ * This command provides users with information on how to support the project through donations.
+ */
 public class Donate implements CommandInterface {
 
+    /**
+     * Returns the command data for the "donate" slash command.
+     *
+     * @return CommandData object containing the command information.
+     */
     @Override
     public CommandData commandData() {
         return Commands.slash("donate", "Zeigt dir wie du uns Unterstützen kannst");
     }
 
+
+    /**
+     * Handles the execution of the "donate" slash command.
+     * Sends a reply with a button linking to the donation page.
+     *
+     * @param e     The SlashCommandInteractionEvent triggered by the command.
+     * @param dcBot The DCBot instance.
+     */
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
         if (e == null || dcBot == null) {

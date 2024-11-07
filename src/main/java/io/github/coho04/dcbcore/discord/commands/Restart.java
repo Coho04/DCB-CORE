@@ -13,13 +13,29 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * The Restart class implements the CommandInterface to handle the "restart" slash command.
+ * This command restarts the bot.
+ */
 public class Restart implements CommandInterface {
 
+    /**
+     * Returns the command data for the "restart" slash command.
+     *
+     * @return CommandData object containing the command information.
+     */
     @Override
     public CommandData commandData() {
         return Commands.slash("restart", "Starte den Bot neu!");
     }
 
+    /**
+     * Handles the execution of the "restart" slash command.
+     * Restarts the bot if the user has the necessary permissions.
+     *
+     * @param e     The SlashCommandInteractionEvent triggered by the command.
+     * @param dcBot The DCBot instance.
+     */
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
         if (e == null || dcBot == null) {
@@ -34,6 +50,12 @@ public class Restart implements CommandInterface {
         }
     }
 
+    /**
+     * Restarts the bot by executing a new process with the specified JAR file.
+     *
+     * @param jda   The JDA instance.
+     * @param dcBot The DCBot instance.
+     */
     public static void restartBot(JDA jda, DCBot dcBot) {
         try {
             String jarFileName = dcBot.getConfig().getProjektName() + "-" + dcBot.getConfig().getProjektVersion() + ".jar";
@@ -67,6 +89,15 @@ public class Restart implements CommandInterface {
         }
     }
 
+    /**
+     * Creates and returns a new process to restart the bot.
+     *
+     * @param dcBot      The DCBot instance.
+     * @param path       The path to the directory containing the JAR file.
+     * @param jarFileName The name of the JAR file.
+     * @return The Process object representing the new process.
+     * @throws IOException If an I/O error occurs.
+     */
     private static @NotNull Process getProcess(DCBot dcBot, Path path, String jarFileName) throws IOException {
         String absolutePath = path + File.separator + jarFileName;
 

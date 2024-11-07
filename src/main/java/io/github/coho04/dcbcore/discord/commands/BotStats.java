@@ -12,14 +12,30 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 import java.awt.Color;
 
+/**
+ * The BotStats class implements the CommandInterface to handle the "bot-stats" slash command.
+ * This command provides users with statistics about the bot.
+ */
 @SuppressWarnings("ConstantConditions")
 public class BotStats implements CommandInterface {
 
+    /**
+     * Returns the command data for the "bot-stats" slash command.
+     *
+     * @return CommandData object containing the command information.
+     */
     @Override
     public CommandData commandData() {
         return Commands.slash("bot-stats", "Zeigt dir die Bot Statistiken");
     }
 
+    /**
+     * Handles the execution of the "bot-stats" slash command.
+     * Sends an embedded message with bot statistics.
+     *
+     * @param e     The SlashCommandInteractionEvent triggered by the command.
+     * @param dcBot The DCBot instance.
+     */
     @Override
     public void runSlashCommand(SlashCommandInteractionEvent e, DCBot dcBot) {
         if (e == null || dcBot == null) {
