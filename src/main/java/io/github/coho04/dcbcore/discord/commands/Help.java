@@ -4,13 +4,13 @@ import io.github.coho04.dcbcore.DCBot;
 import io.github.coho04.dcbcore.discord.events.ButtonClickListener;
 import io.github.coho04.dcbcore.interfaces.CommandInterface;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
-
+import net.dv8tion.jda.api.components.buttons.Button;
 import java.awt.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -67,12 +67,14 @@ public class Help implements CommandInterface {
         Button next = Button.primary("core-next", "Nächste Seite").withDisabled(pages.size() <= 1);
 
         e.replyEmbeds(pages.get(currentPage.get()))
-                .addActionRow(
-                        prev,
-                        next,
-                        Button.link("https://wiki.Golden-Developer.de", "Online Übersicht"),
-                        Button.link("https://support.Golden-Developer.de", "Support Anfragen")
-                ).queue(interactionHook -> interactionHook.retrieveOriginal().queue(message ->
+                .setComponents(
+                        ActionRow.of(
+                                prev,
+                                next,
+                                Button.link("https://wiki.Golden-Developer.de", "Online Übersicht"),
+                                Button.link("https://support.Golden-Developer.de", "Support Anfragen")
+                        )
+               ).queue(interactionHook -> interactionHook.retrieveOriginal().queue(message ->
                         e.getJDA().addEventListener(new ButtonClickListener(message, pages, currentPage, prev, next))));
     }
 }
