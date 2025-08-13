@@ -51,7 +51,7 @@ public class Discord {
                     )
                     .enableIntents(
                             GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_MESSAGES,
-                            GatewayIntent.GUILD_EMOJIS_AND_STICKERS, GatewayIntent.DIRECT_MESSAGES,
+                            GatewayIntent.GUILD_EXPRESSIONS, GatewayIntent.DIRECT_MESSAGES,
                             GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MODERATION,
                             GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.GUILD_INVITES,
                             GatewayIntent.DIRECT_MESSAGE_TYPING, GatewayIntent.GUILD_MESSAGE_TYPING,

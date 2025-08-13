@@ -3,10 +3,11 @@ package io.github.coho04.dcbcore.discord.commands;
 import io.github.coho04.dcbcore.DCBot;
 import io.github.coho04.dcbcore.interfaces.CommandInterface;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
+import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 /**
  * The Invite class implements the CommandInterface to handle the "invite" slash command.
@@ -37,11 +38,7 @@ public class Invite implements CommandInterface {
             return;
         }
 
-        e.getInteraction().reply("Mit dem Button kannst du mich auf deinen Server einladen!")
-                .addActionRow(
-                        Button.link(e.getJDA().setRequiredScopes("applications.commands")
-                                .getInviteUrl(Permission.ADMINISTRATOR), "Hier Klicken")
-                ).queue();
+        e.getInteraction().reply("Mit dem Button kannst du mich auf deinen Server einladen!").setComponents(ActionRow.of(Button.link(e.getJDA().setRequiredScopes("applications.commands").getInviteUrl(Permission.ADMINISTRATOR), "Hier Klicken"))).queue();
 
     }
 }
