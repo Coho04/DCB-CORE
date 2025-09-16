@@ -2,10 +2,11 @@ package io.github.coho04.dcbcore.discord.commands;
 
 import io.github.coho04.dcbcore.DCBot;
 import io.github.coho04.dcbcore.interfaces.CommandInterface;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
+import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 /**
  * The BotOwner class implements the CommandInterface to handle the "bot-owner" slash command.
@@ -37,7 +38,7 @@ public class BotOwner implements CommandInterface {
         }
 
         e.getInteraction().reply("Der Bot Owner ist die Developer Organisation Golden-Developer")
-                .addActionRow(Button.link("https://dc.golden-developer.de/", "Zum Server"))
+                .setComponents(ActionRow.of(Button.link("https://dc.golden-developer.de/", "Zum Server")))
                 .queue();
     }
 }

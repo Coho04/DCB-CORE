@@ -2,10 +2,11 @@ package io.github.coho04.dcbcore.discord.commands;
 
 import io.github.coho04.dcbcore.DCBot;
 import io.github.coho04.dcbcore.interfaces.CommandInterface;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
+import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 /**
  * The Donate class implements the CommandInterface to handle the "donate" slash command.
@@ -38,7 +39,7 @@ public class Donate implements CommandInterface {
         }
         e.getInteraction()
                 .reply("Wenn du uns etwas Spenden möchtest dann kannst du dies gerne in dem du unten auf den Button kickst machen! \n" + "Vielen Danke <3 !")
-                .addActionRow(Button.link("https://donate.golden-developer.de/", "Zur Spende"))
+                .setComponents(ActionRow.of(Button.link("https://donate.golden-developer.de/", "Zur Spende")))
                 .queue();
     }
 }
