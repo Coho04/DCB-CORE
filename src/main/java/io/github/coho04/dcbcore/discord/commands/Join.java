@@ -3,11 +3,12 @@ package io.github.coho04.dcbcore.discord.commands;
 import io.github.coho04.dcbcore.DCBot;
 import io.github.coho04.dcbcore.discord.Discord;
 import io.github.coho04.dcbcore.interfaces.CommandInterface;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
+import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 /**
  * The Join class implements the CommandInterface to handle the "join" slash command.
@@ -41,7 +42,7 @@ public class Join implements CommandInterface {
         Guild guild = e.getJDA().getGuildById(Discord.MAIN_GUILD);
         if (guild != null) {
             e.getInteraction().reply("Mit dem Button unten kannst du unserem Server beitreten!")
-                    .addActionRow(Button.link(guild.getTextChannelById(Discord.WELCOME_CHANNEL).createInvite().complete().getUrl(), "Zum Server"))
+                    .setComponents(ActionRow.of(Button.link(guild.getTextChannelById(Discord.WELCOME_CHANNEL).createInvite().complete().getUrl(), "Zum Server")))
                     .queue();
         } else {
             e.getInteraction().reply("ERROR: Server is NULL").queue();
