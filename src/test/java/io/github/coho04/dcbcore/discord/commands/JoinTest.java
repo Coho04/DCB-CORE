@@ -9,7 +9,8 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.requests.restaction.InviteAction;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.components.buttons.Button;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -66,13 +67,13 @@ public class JoinTest {
 
         when(eventMock.getInteraction()).thenReturn(interactionMock);
         when(interactionMock.reply(anyString())).thenReturn(replyActionMock);
-        when(replyActionMock.addActionRow(any(Button.class))).thenReturn(replyActionMock);
+        when(replyActionMock.addComponents(any(ActionRow.class))).thenReturn(replyActionMock);
         doNothing().when(replyActionMock).queue();
 
         join.runSlashCommand(eventMock, dcBotMock);
 
         verify(eventMock, times(1)).getInteraction();
-        verify(replyActionMock, times(1)).addActionRow(any(Button.class));
+        verify(replyActionMock, times(1)).addComponents(any(ActionRow.class));
         verify(replyActionMock, times(1)).queue();
     }
 
