@@ -4,7 +4,8 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.components.buttons.Button;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -44,7 +45,7 @@ public class ButtonClickListener extends ListenerAdapter {
      */
     @Override
     public void onButtonInteraction(ButtonInteractionEvent event) {
-        var buttonId = event.getButton().getId();
+        var buttonId = event.getButton().getCustomId();
         if (!buttonId.equalsIgnoreCase("core-prev") && !buttonId.equalsIgnoreCase("core-next")) {
             System.out.println("Button not found");
             return;
@@ -58,9 +59,9 @@ public class ButtonClickListener extends ListenerAdapter {
             newPage = Math.min(pages.size() - 1, currentPage.incrementAndGet());
         }
         event.editMessageEmbeds(pages.get(newPage))
-                .setActionRow(
+                .setComponents(ActionRow.of(
                         prev.withDisabled(newPage == 0),
                         next.withDisabled(newPage == pages.size() - 1)
-                ).queue();
+                )).queue();
     }
 }

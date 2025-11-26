@@ -5,7 +5,8 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.components.buttons.Button;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -54,8 +55,8 @@ public class InviteTest {
         // Mock the behavior of reply() method of SlashCommandInteraction
         doReturn(replyActionMock).when(interactionMock).reply(anyString());
 
-        // Mock the behavior of addActionRow() method of ReplyCallbackAction
-        doReturn(replyActionMock).when(replyActionMock).addActionRow(any(Button.class));
+        // Mock the behavior of addComponents() method of ReplyCallbackAction
+        doReturn(replyActionMock).when(replyActionMock).addComponents(any(ActionRow.class));
         doNothing().when(replyActionMock).queue();
 
         invite.runSlashCommand(eventMock, dcBotMock);
@@ -64,7 +65,7 @@ public class InviteTest {
         verify(eventMock, times(1)).getInteraction();
 
         // Verify interactions with replyActionMock
-        verify(replyActionMock, times(1)).addActionRow(any(Button.class));
+        verify(replyActionMock, times(1)).addComponents(any(ActionRow.class));
         verify(replyActionMock, times(1)).queue();
     }
 
